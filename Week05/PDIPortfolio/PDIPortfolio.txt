@@ -1,0 +1,71 @@
+BEGIN CLASS PDIPortfolio
+    MAIN:
+        DO
+             userInput = ASK USER WITH PROMPT "Welcome to Programming  Design and Implementation, Workshop 3
+
+                                                 What would you like to do?
+                                                    > 1. Sum of 2 Integers
+                                                    > 2. Product of 2 Integers
+                                                    > 3. Determine if 2 Integers are Divisible
+                                                    > 0. Exit
+
+            minValue = 0 
+            maxValue = 4
+            DO:
+                userInput = INPUT FROM USER
+                IF userInput > maxValue OR userInput < minValue
+                    PRINT "Error: Invalid input, input must be between " + minValue + " and " + maxValue
+                END IF
+            WHILE userInput > maxValue OR userInput < minValue
+
+            CASE userInput
+                1:
+                    sum2Ints <- IMPORT integerOne AND integerTwo 
+                2:
+                    prod2Ints <- IMPORT integerOne AND integerTwo
+                3:
+                    div2Ints <- IMPORT integerOne AND integerTwo
+                0:
+                    PRINT "Goodbye"
+            END CASE
+        WHILE userInput IS EQUAL TO 0
+
+    END MAIN
+
+
+
+    SUBMODULE: sum2Ints
+    IMPORT: integerOne (int), integerTwo (int)
+    EXPORT: none
+    ASSERTION: To sum two integers and print the result
+    ALGORITHM: 
+        answer = integerOne + integerTwo 
+        PRINT "The sum of the two integers is: " + answer
+    END ALGORITHIM
+
+
+
+    SUBMODULE: prod2Ints
+    IMPORT: integerOne (int), integerTwo (int)
+    EXPORT: none
+    ASSERTION: To find the product of the two integers and print the result
+    ALGORITHIM:
+        answer = integerOne * integerTwo
+        PRINT "The sum of the two integers is: " + answer
+    END ALGORITHIM
+
+
+
+    SUBMODULE: div2Ints
+    IMPORT: integerOne (int), integerTwo (int)
+    EXPORT: none
+    ASSERTION: To check if two integers are divisible and print the result
+    ALGORITHIM:
+        answer = integerOne % integerTwo
+        IF answer == 0 THEN
+            PRINT "The two integers ARE divisible"
+        ELSE 
+            PRINT "The two integers are NOT divisible"
+        END IF 
+    END ALGORITHIM
+END

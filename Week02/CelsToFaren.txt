@@ -1,0 +1,10 @@
+BEGIN CelsToFaren
+    MAIN:
+        celsius <- ASK USER WITH PROMPT "Please enter the celsius temperature, as a whole number: "
+        
+        fahrenheit <- 9/5*celsius+32
+
+        PRINT "The temperature in fahrenheit is: " + fahrenheit + "degrees fahrenheit"
+    END MAIN
+END 
+        

@@ -1,0 +1,176 @@
+BEGIN CLASS PondCalculator
+    BEGIN MAIN
+        pondCalcProg()
+    END MAIN
+
+
+    SUBMODULE: pondCalcProg
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: To call all methods needed for running the program.
+    BEGIN
+        DO
+            userInput (integer) <- mainMenu()
+            volume (integer)
+            CASE userInput
+            
+                1:
+                    exit (boolean) <- joey()
+
+                2:
+                    exit (boolean) <- cory()
+
+                3:
+                    exit (boolean) <- rachel()
+
+                0: 
+                    exit = true
+            END CASE
+            
+        
+        WHILE exit IS NOT EQUAL TO true
+    END    
+
+
+    SUBMODULE: mainMenu
+    IMPORT: none
+    EXPORT: userInput (integer)
+    ASSERTION: Display the name menu
+    BEGIN
+        minVal (integer) <- 0
+        maxVal (integer) <- 3
+        PRINT "Who would you like to calculate?"
+        PRINT " 1. Joey"
+        PRINT " 2. Cory"
+        PRINT " 3. Rachel"
+        PRINT " 0. Exit"
+        RETURN userInput(minVal, maxVal)
+    END
+
+
+    SUBMODULE: userInput
+    IMPORT: minVal (integer), maxVal (integer)
+    EXPORT: userInput
+    ASSERTION: To take the user input and return the value
+    BEGIN
+        DO
+            userInput <- Read next line and parse to integer
+            IF userInput IS LESS THAN minVal OR userInput IS GREATER THAN maxVal THEN
+                PRINT "Error: the value must be between" + minVal + "and " + maxVal
+                PRINT "Please enter another choice: "
+            END IF 
+        WHILE userInput IS LESS THAN minVal OR userInput IS GREATER THAN maxVal 
+        
+        RETURN userInput
+    END
+
+
+    SUBMODULE: volCalc
+    IMPORT: name (string)
+    EXPORT: volume (integer)
+    ASSERTION: To gather user input, and calculate the volume.
+    BEGIN
+        PRINT: "You chose" + name + ". Please enter the: "
+        depth (integer) <- ASK USER WITH PROMPT "Depth: "
+        length (integer) <- ASK USER WITH PROMPT "Length: " 
+        width (integer) <- ASK USER WITH PROMPT "Width: "
+        volume (integer) <- depth * length * width
+        RETURN volume
+    END
+
+
+    SUBMODULE: joey
+    IMPORT: none 
+    EXPORT: exit (boolean)
+    ASSERTION: To complete all tasks related to Joey
+    BEGIN
+        name (string) <- "Joey"
+        minVal (integer) <- 1
+        maxVal (integer) <- 2
+        volume (integer) = volCalc(name)
+        PRINT "Thankyou! Now please select an animal: 
+        PRINT "1. Sting Rays"
+        PRINT "2. Arowana"
+        userInput (integer) <- userInput(minVal, maxVal)
+        IF userInput IS EQUAL TO 1 THEN
+            numAnimals (integer) <- volume * 0.5
+            PRINT name + " can store " + numAnimals + " sting rays in his " +
+                                                            volume + "m^3 pond"
+        ELSE 
+            numAnimals (integer) <- volume * 0.4
+            PRINT name + " can store " + numAnimals + " arowana in his " + 
+                                                            volume + "m^3 pond"
+        RETURN exit (boolean) <- secondMenu()
+    END
+
+
+    SUBMODULE: cory
+    IMPORT: none 
+    EXPORT: exit (boolean)
+    ASSERTION: To complete all tasks related to Cory
+    BEGIN
+        name (string) <- "Cory"
+        minVal (integer) <- 1
+        maxVal (integer) <- 2
+        volume (integer) = volCalc(name)
+        PRINT "Thankyou! Now please select an animal: 
+        PRINT "1. Koi"
+        PRINT "2. Puffer Fish"
+        userInput (integer) <- userInput(minVal, maxVal)
+        IF userInput IS EQUAL TO 1 THEN
+            numAnimals (integer) <- volume * 0.6
+            PRINT name + " can store " + numAnimals + " koi in his " +
+                                                            volume + "m^3 pond"
+        ELSE 
+            numAnimals (integer) <- volume * 0.8
+            PRINT name + " can store " + numAnimals + " puffer fish in his " + 
+                                                            volume + "m^3 pond"
+        RETURN exit (boolean) <- secondMenu()
+    END
+
+    
+    SUBMODULE: rachel
+    IMPORT: none 
+    EXPORT: exit (boolean)
+    ASSERTION: To complete all tasks related to Rachel
+    BEGIN
+        name (string) <- "Rachel"
+        minVal (integer) <- 1
+        maxVal (integer) <- 2
+        volume (integer) = volCalc(name)
+        PRINT "Thankyou! Now please select an animal: 
+        PRINT "1. Turtles"
+        PRINT "2. Frogs"
+        userInput (integer) <- userInput(minVal, maxVal)
+        IF userInput IS EQUAL TO 1 THEN
+            numAnimals (integer) <- volume * 1.2
+            PRINT name + " can store " + numAnimals + " turtles in his " +
+                                                            volume + "m^3 pond"
+        ELSE 
+            numAnimals (integer) <- volume * 4.5
+            PRINT name + " can store " + numAnimals + " frogs in his " + 
+                                                            volume + "m^3 pond"
+        RETURN exit (boolean) <- secondMenu()
+    END
+
+
+    SUBMODULE: secondMenu
+    IMPORT: none
+    EXPORT: exit (integer)
+    ASSERTION: To prompt the user with a menu, asking if they wish to exit
+    BEGIN
+        DO
+            userInput (integer) <- PRINT "Press 1 to return to the main menu, or 9 to exit"
+            CASE userInput
+
+                1:
+                    exit (boolean) <- false
+
+                9: 
+                    exit (boolean) <- true
+
+                DEFAULT:
+                    PRINT "Please enter a correct selection"
+        WHILE userInput IS NOT EQUAL TO 1 OR userInput IS NOT EQUAL TO 9
+        RETURN exit
+    END

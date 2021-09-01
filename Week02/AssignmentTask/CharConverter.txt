@@ -1,0 +1,14 @@
+BEGIN CharConverter
+    MAIN:
+        upperCase <- ASK USER WITH PROMPT "Please enter an uppercase character: " 
+
+        upperDecimal <- CONVERT upperCase TO upperDecimal THROUGH TYPE CASTING
+        
+        lowerDecimal = upperDecimal + 32
+
+        lowerCase <- CONVERT lowerDecimal TO lowerCase THROUGH TYPE CASTING
+
+        PRINT "The ASCII value of '" + upperCase + "' is: " + upperDecimal
+        PRINT "The lowercase value of '" + upperCase + "' is: '" + lowerCase + "'"
+    END MAIN
+END

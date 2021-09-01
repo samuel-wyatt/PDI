@@ -1,0 +1,43 @@
+found = TRUE
+numElements = 0
+
+numElements (Integer) <- ASK USER WITH PROMPT "Please enter the length you'd like ←􏰀 your array to be: "
+
+CREATE array OF INT, SIZE OF numElements // Assume the array is filled here.
+
+searchInt (Integer) <- ASK USER WITH PROMPT "Please enter the integer you would ←􏰀 like to search for in the array:"
+
+FOR i = 0 TO numElements INC BY 1
+    foundAt = 0
+    IF array[i] EQUALS numElements THEN
+        foundAt = i
+        found = TRUE
+        BREAK 
+    END IF
+END FOR
+PRINT "Integer found at" foundAt
+
+
+
+
+
+
+found = FALSE
+numElements = 0
+
+numElements (Integer) <- ASK USER WITH PROMPT "Please enter the length you'd like ←􏰀 your array to be: "
+
+CREATE array OF INT, SIZE OF numElements // Assume the array is filled here.
+
+searchInt (Integer) <- ASK USER WITH PROMPT "Please enter the integer you would ←􏰀 like to search for in the array:"
+
+FOR i = 0 TO numElements INC BY 1
+    foundAt = 0
+    IF array[i] EQUALS numElements THEN
+        foundAt = i
+        found = TRUE
+        BREAK 
+    END IF
+END FOR
+PRINT "Integer found at" foundAt
+

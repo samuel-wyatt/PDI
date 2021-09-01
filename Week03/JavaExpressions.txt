@@ -1,0 +1,33 @@
+String hello = "World";
+double x = 314.219, y= 240.213;
+int mill = 1999, eng = 201, cap = 9;
+
+****************
+Java Expressions
+****************
+
+(a) (int)x - mill / 100
+
+    314 - 1999 / 100 
+    -1685 / 100
+    -16
+
+(b) hello + eng
+
+    World201
+
+(c) (double)((eng - (int)y) / 2)
+
+    (double)((201 - 240) / 2) 
+    (double)(-39 / 2)
+    (double)(-19)
+    -19.0
+
+(d) 
+    
+    (mill / (100 * cap)) * cap - eng / 10
+    (1999 / (100 * 9)) * 9 - 201 / 10
+    (1999 / 900) * 9 - 201 / 10
+    2 * 9 - 201 / 10 
+    18 - 20
+    -2    

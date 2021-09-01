@@ -1,0 +1,30 @@
+BEGIN CelsAndFaren
+    MAIN:
+        exit <- false
+        DO:
+        userChoice <- ASK USER WITH PROMPT "Which temperature scale are you converting from?
+                                                >(C)elsius
+                                                >(F)ahrenheit"
+            IF userChoice IS NOT EQUAL TO 'F' OR 'f' OR 'C' OR 'c' THEN 
+                PRINT "Error: Invalid Choice, Please select one of the above choices"
+                exit = true
+            END IF
+        WHILE exit = !true
+
+        IF userChoice IS EQUAL TO 'C' OR 'c' THEN
+                celsius <- ASK USER WITH PROMPT "Please enter the celsius temperature, as a whole number: "
+                
+                fahrenheit <- 9/5*celsius+32
+
+                PRINT "The temperature in fahrenheit is: " + fahrenheit + "degrees fahrenheit"
+
+        
+        IF ELSE userChoice IS EQUAL TO 'F' OR 'f' THEN
+                fahrenheit <- ASK USER WITH PROMPT "Please enter the fahrenheit temperature, as a whole number: "
+
+                celsius <- (5 / 9) * (fahrenheit - 32)
+
+                PRINT "The temperature in celsius is: " + celsius + "degrees celsius"
+        END IF
+    END MAIN
+END 

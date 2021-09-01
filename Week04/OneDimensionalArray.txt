@@ -1,0 +1,17 @@
+BEGIN OneDimensionalArray
+    MAIN:
+            exit <- false (Boolean)
+            userIn <- ASK USER WITH PROMPT "Please enter a whole number between 1 and 20 inclusive"
+            FOR
+                IF userIn IS LESS THAN OR EQUAL TO 0 OR MORE THAN OR EQUAL TO 20 THEN
+                    PRINT "Error: Please enter a number between 1 and 20"
+                ELSE 
+                    exit = true
+            WHILE exit = !false
+
+            newArray = Array of length (userIn)
+            FOR i=1 TO userIn CHANGEBY 1
+                Array[i] <- GENERATE RANDOM NUMBER BETWEEN 1 AND 20
+            ENDFOR
+    ENDMAIN
+END

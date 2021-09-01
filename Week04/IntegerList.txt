@@ -1,0 +1,8 @@
+BEGIN IntegerList
+    MAIN:
+        userInput <- ASK USER WITH PROMPT "Please enter an integer: "
+        FOR i=1 TO userInput CHANGEBY 1
+            PRINT i
+        ENDFOR
+    END MAIN
+END

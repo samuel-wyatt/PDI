@@ -1,0 +1,33 @@
+BEGIN CharConverter
+    MAIN:
+        userChoice <- ASK USER WITH PROMPT "Would you like to convert from: 
+                                            (1) Uppercase to lowercase
+                                            (2) Lowercase to uppercase"
+        IF userChoice IS EQUAL TO 1 THEN
+
+            upperCase <- ASK USER WITH PROMPT "Please enter an uppercase character: " 
+
+            upperDecimal <- CONVERT upperCase TO upperDecimal THROUGH TYPE CASTING
+        
+            lowerDecimal = upperDecimal + 32
+
+            lowerCase <- CONVERT lowerDecimal TO lowerCase THROUGH TYPE CASTING
+     
+            PRINT "The ASCII value of '" + upperCase + "' is: " + upperDecimal
+            PRINT "The lowercase value of '" + upperCase + "' is: '" + lowerCase + "'"
+   
+        ELSE IF userChoice IS EQUAL TO 2 THEN 
+            
+            lowerCase <- ASK USER WITH PROMPT "Please enter a lowercase character: " 
+    
+            lowerDecimal <- CONVERT lowerCase TO lowerDecimal THROUGH TYPE CASTING 
+
+            upperDecimal = lowerDecimal - 32 
+        
+            upperCase <- CONVERT upperDecimal TO upperCase THROUGH TYPE CASTING 
+
+            PRINT "The ASCII value of '" + lowerCase + "' is: " + lowerDecimal
+            PRINT "The uppercase value of '" + lowerCase + "' is: '" + upperCase + "'"
+        END IF 
+     END MAIN
+END

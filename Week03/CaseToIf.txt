@@ -1,0 +1,14 @@
+PRINT "Please enter the direction you would like to go in
+        (L) left, (R) right, (U) up, (D) down "
+INPUT direction (Character)
+IF direction IS EQUAL TO 'L' OR 'l' THEN
+    PRINT "Going west"
+IF ELSE direction IS EQUAL TO 'R' OR 'r' THEN
+    PRINT "Going east"
+IF ELSE direction IS EQUAL TO 'U' OR 'u' THEN
+    PRINT "Going up"
+IF ELSE direction IS EQUAL TO 'D' OR 'd' THEN 
+    PRINT "Going down"
+ELSE 
+    PRINT "Going nowhere"
+ENDIF 

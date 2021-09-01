@@ -1,0 +1,6 @@
+Q) Why would we need to use ASCII values?
+
+A) We use ASCII values because it allows us to mathematically link
+lowercase and uppercase letters, by converting to decimal, to give 
+the value, and then add 40 and convert back to c character to display 
+the uppercase letter.

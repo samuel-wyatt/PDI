@@ -1,0 +1,47 @@
+BEGIN Menu
+    MAIN:
+        DO
+             userInput <- ASK USER WITH PROMPT "Welcome to Programming  Design and Implementation, Workshop 3
+
+                                                 What would you like to do?
+                                                    > 1. Sum of 2 Integers
+                                                    > 2. Product of 2 Integers
+                                                    > 3. Determine if 2 Integers are Divisible
+                                                    > 0. Exit
+
+            minValue = 0 
+            maxValue = 4
+            DO:
+                userInput <- INPUT FROM USER
+                IF userInput > maxValue OR userInput < minValue
+                    PRINT "Error: Invalid input, input must be between " + minValue + " and " + maxValue
+                END IF
+            WHILE userInput > maxValue OR userInput < minValue
+
+
+             IF userInput IS EQUAL TO 1 THEN
+                  integerOne <- ASK USER WITH PROMPT "Please enter the first integer: "
+                 integerTwo <- ASK USER WITH PROMPT "Please enter the second integer: " 
+                 PRINT "The sum of the two integers is: " + integerOne + integerTwo
+
+             ELSE IF userInput IS EQUAL TO 2 THEN
+                 integerOne <- ASK USER WITH PROMPT "Please enter the first integer: " 
+                 integerTwo <- ASK USER WITH PROMPT "Please enter the second integer: " 
+                 PRINT "The product of the two integers is: " + integerOne * integerTwo
+
+             ELSE IF userInput IS EQUAL TO 3 THEN
+                    integerOne <- ASK USER WITH PROMPT "Please enter the first integer: " 
+                    integerTwo <- ASK USER WITH PROMPT "Please enter the second integer: " 
+                    divideAnswer <- integerOne % integerTwo == 0 
+
+        	 ELSE IF userInput IS EQUAL TO 0 THEN
+	                PRINT "Goodbye"
+	                exit <- true
+	
+             ELSE
+	                PRINT "ERROR: Invalid Input"
+
+             END IF
+        WHILE exit EQUALS TO !true
+    END MAIN
+END
