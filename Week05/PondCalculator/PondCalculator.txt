@@ -11,7 +11,6 @@ BEGIN CLASS PondCalculator
     BEGIN
         DO
             userInput (integer) <- mainMenu()
-            volume (integer)
             CASE userInput
             
                 1:
@@ -32,14 +31,14 @@ BEGIN CLASS PondCalculator
     END    
 
 
-    SUBMODULE: mainMenu
-    IMPORT: none
+    SUBMODULE: mainMenu 
+    IMPORT: none 
     EXPORT: userInput (integer)
-    ASSERTION: Display the name menu
+    ASSERTION: Display the main menu
     BEGIN
         minVal (integer) <- 0
         maxVal (integer) <- 3
-        PRINT "Who would you like to calculate?"
+        PRINT "Who's pond would you like to calculate?"
         PRINT " 1. Joey"
         PRINT " 2. Cory"
         PRINT " 3. Rachel"
@@ -144,11 +143,11 @@ BEGIN CLASS PondCalculator
         userInput (integer) <- userInput(minVal, maxVal)
         IF userInput IS EQUAL TO 1 THEN
             numAnimals (integer) <- volume * 1.2
-            PRINT name + " can store " + numAnimals + " turtles in his " +
+            PRINT name + " can store " + numAnimals + " turtles in her " +
                                                             volume + "m^3 pond"
         ELSE 
             numAnimals (integer) <- volume * 4.5
-            PRINT name + " can store " + numAnimals + " frogs in his " + 
+            PRINT name + " can store " + numAnimals + " frogs in her " + 
                                                             volume + "m^3 pond"
         RETURN exit (boolean) <- secondMenu()
     END
@@ -170,7 +169,7 @@ BEGIN CLASS PondCalculator
                     exit (boolean) <- true
 
                 DEFAULT:
-                    PRINT "Please enter a correct selection"
+                    PRINT "Please enter a correct menu choice"
         WHILE userInput IS NOT EQUAL TO 1 OR userInput IS NOT EQUAL TO 9
         RETURN exit
     END
