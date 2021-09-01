@@ -27,13 +27,13 @@ public class PondCalculator
             switch(userInput)
             {
                 case 1:
-                    exit = joey();
+                    joey();
                 break;
                 case 2:
-                    exit = cory();
+                    cory();
                 break;
                 case 3:
-                    exit = rachel();
+                    rachel();
                 break;
                 case 0:
                     exit = true;
@@ -107,7 +107,7 @@ public class PondCalculator
         IMPORT: none
         EXPORT: exit
         ASSERTION: To complete all tasks related to joey */
-    public static boolean joey()
+    public static void joey()
     {
         String name = "Joey";
         int minVal = 1, maxVal = 2, volume, userInput;
@@ -135,7 +135,7 @@ public class PondCalculator
         IMPORT: none
         EXPORT: exit
         ASSERTION: To complete all tasks related to cory */
-    public static boolean cory()
+    public static void cory()
     {
         String name = "Cory";
         int minVal = 1, maxVal = 2, volume, userInput;
@@ -163,7 +163,7 @@ public class PondCalculator
         IMPORT: none
         EXPORT: exit
         ASSERTION: To complete all tasks related to joey */
-    public static boolean rachel()
+    public static void rachel()
     {
         String name = "Rachel";
         int minVal = 1, maxVal = 2, volume, userInput;
@@ -200,12 +200,15 @@ public class PondCalculator
         {
             System.out.println("\nPress 1 to return to the main menu, or 9 to exit");
             userInput = Integer.parseInt(sc.nextLine());
-            if (userInput == 1 || userInput == 9)
+            if (userInput == 9)
             {
+                return true;
+            } else if (userInput == 1) {
+                return false;
             } else {
                 System.out.println("Please enter a correct menu choice");
             }
         } while (userInput != 1 || userInput != 9);
-        return exit = true;
+        return true;
     }   
 }
