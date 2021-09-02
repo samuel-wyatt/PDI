@@ -1,0 +1,177 @@
+ ***********************************
+ *Author: Samuel Wyatt (20555535)  *
+ *Date: 02/09/2021                 *
+ *Purpose: Assignment 1 Psuedocode *
+ ***********************************
+
+BEGIN CLASS TaskTwo
+    
+           DECLARE lionelMessi: ARRAY [5] OF INTEGERS
+
+    BEGIN MAIN
+        initialMsg()
+
+        DECLARE mohamedSalah: ARRAY [5] OF INTEGERS
+        mohamedSalah <- mohamedSalahArray()
+        PRINT "---------------"
+        DECLARE harryKane: ARRAY [5] OF INTEGERS
+        harryKane <- harryKaneArray()
+        PRINT "---------------"
+        DECLARE lionelMessi: ARRAY [5] OF INTEGERS
+        lionelMessi <- lionelMessiArray()
+        PRINT "==================="
+        PRINT "Data Entry Complete"
+        PRINT "==================="
+        
+        menuChoice()
+    END MAIN       
+    
+
+    SUBMODULE: mohamedSalahArray
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: To fill mohamedSalah with user elements
+    BEGIN mohamedSalahArray
+        PRINT "Please enter the goals scored by Mohamed Salah:"
+        FOR i (integer) <- 0 TO i IS LESS THAN 5 CHANGEBY 1
+            PRINT "Week " + (i + 1) + ": "
+            mohamedSalah[i] <- GET USER INPUT 
+            IF mohamedSalah[i] IS LESS THAN 0 THEN
+                mohamedSalah[i] <- 0
+            END IF
+        END FOR
+    END
+    
+
+    SUBMODULE: harryKaneArray
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: To fill harryKane with user elements
+    BEGIN harryKaneArray
+        PRINT "Please enter the goals scored by Harry Kane:"
+        FOR i (integer) <- 0 TO i IS LESS THAN 5 CHANGEBY 1
+            PRINT "Week " + (i + 1) + ": "
+            harryKane[i] <- GET USER INPUT 
+            IF harryKane[i] IS LESS THAN 0 THEN
+                harryKane[i] <- 0
+            END IF
+        END FOR
+    END
+
+
+    SUBMODULE: lionelMessiArray
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: To fill lionelMessi with user elements.
+    BEGIN lionelMessiArray
+        PRINT "Please enter the goals scored by Lionel Messi:"
+        FOR i (integer) <- 0 TO i IS LESS THAN 5 CHANGEBY 1
+            PRINT "Week " + (i + 1) + ": "
+            lionelMessi[i] <- GET USER INPUT 
+            IF lionelMessi[i] IS LESS THAN 0 THEN
+                lionelMessi[i] <- 0
+            END IF
+        END FOR
+    END
+
+
+    SUBMODULE: initialMsg
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: To print the inital message for the program
+    BEGIN initialMsg
+        PRINT "*************************************************"
+        PRINT "| Welcome to the Golden Boot Tracker Program    |"
+        PRINT "|  Your program will track goals scored by 3    |"
+        PRINT "|         players during 5 matches.             |"
+        PRINT "*************************************************"
+        PRINT "                                                 "
+        PRINT "Data Entry: "
+    END 
+
+
+    SUBMODULE: menuChoice
+    IMPORT: none
+    EXPORT: none
+    ASSERTION: To prompt the user with a menu, and return the input if valid.
+    BEGIN menuChoice
+        PRINT "*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*"
+        PRINT "Menu Choice:"
+        PRINT "> 1. Display the total number of goals scored by each player."
+        PRINT "> 2. Diplay the average number of goals scored by each player."
+        PRINT "> 3. Display the highest goal scorer's name and number of goals."
+        PRINT " " 
+        PRINT "Your choice: "
+        DO
+        userInput (integer) <- GET USER INPUT
+            IF userInput IS EQUAL TO 1 OR userInput IS EQUAL TO 2 OR userInput
+            IS EQUAL TO 3 THEN 
+                calcControl(userInput)
+            ELSE 
+                PRINT "Invalid Choice, Please try again: "
+        WHILE validated IS false
+        PRINT "*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*"
+    END
+
+
+    SUBMODULE: calcControl
+    IMPORT: userInput (integer)
+    EXPORT: none
+    ASSERTION: To control which calculation is performed
+    BEGIN calcControl
+        CASE userInput
+            
+            1:
+                PRINT "Mohamed Salah scored " + sumArray(mohamedSalah) + " goals."
+                PRINT "Harry Kane scored " + sumArray(harryKane) + " goals."
+                PRINT "Lionel Messi scored " + sumArray(lionelMessi) + " goals."
+
+            2:
+                PRINT "Mohamed Salah scored an average of " + 
+                                            avgArray(mohamedSalah) + " goals."
+                PRINT "Harry Kane scored an average of " +
+                                               avgArray(harryKane) + " goals."
+                PRINT "Lionel Messi scored an average of " +
+                                             avgArray(lionelMessi) + " goals."
+            3:
+                DECLARE largestArray: ARRAY [5] OF INTEGERS
+                largestArray <- arrayComparison(mohamedSalah, harryKane, lionelMessi)
+                name (String) <- arrayName(largestArray)
+                PRINT name + " is the highest goal scorer, with " + 
+                sumArray(largestArray) + " goals."
+
+        END CASE
+    END
+
+                 
+    SUBMODULE: arrayComparison
+    IMPORT: mohamedSalah[], harryKane[], lionelMessi[]
+    EXPORT: largestArray[]
+    ASSERTION: To determine which sum of array is largest, and return that array
+    BEGIN arrayComparison
+        array1 <- sumArray(mohamedSalah)
+        array2 <- sumArray(harryKane)
+        array3 <- sumArray(lionelMessi)
+        IF array1 IS GREATER THAN array2 AND array1 IS GREATER THAN array3 THEN
+            return mohamedSalah
+        ELSE IF array2 IS GREATER THAN array1 AND array2 IS GREATER THAN array3 THEN
+            return harryKane
+        ELSE IF array3 IS GREATER THAN array1 AND array3 IS GREATER THAN array2 THEN
+            return lionelMessi
+    END
+
+
+    SUBMODULE: playerName
+    IMPORT: largestArray[]
+    EXPORT: name (String)
+    ASSERTION: To compare the largest array with player arrays to determine name
+    BEGIN playerName
+        IF largestArray AND mohamedSalah HAVE THE SAME ELEMENTS THEN
+            name (String) <- "Mohamed Salah"
+        ELSE IF largestArray AND harryKane HAVE THE SAME ELEMENTS THEN 
+            name (String) <- "Harry Kane"
+        ELSE IF largestArray AND lionelMessi HAVE THE SAME ELEMENTS THEN
+            name (String) <- "Lionel Messi"
+        END IF 
+        RETURN name
+    END
