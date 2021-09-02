@@ -5,10 +5,6 @@
  ***********************************
 
 BEGIN CLASS TaskTwo
-    
-           DECLARE lionelMessi: ARRAY [5] OF INTEGERS
-
-    BEGIN MAIN
         initialMsg()
 
         DECLARE mohamedSalah: ARRAY [5] OF INTEGERS
@@ -100,17 +96,20 @@ BEGIN CLASS TaskTwo
         PRINT "> 1. Display the total number of goals scored by each player."
         PRINT "> 2. Diplay the average number of goals scored by each player."
         PRINT "> 3. Display the highest goal scorer's name and number of goals."
-        PRINT " " 
+        PRINT "> 0. Exit the program."
+        PRINT " "
         PRINT "Your choice: "
         DO
         userInput (integer) <- GET USER INPUT
-            IF userInput IS EQUAL TO 1 OR userInput IS EQUAL TO 2 OR userInput
-            IS EQUAL TO 3 THEN 
+        CASE userInput
+            1: 2: 3:
                 calcControl(userInput)
-            ELSE 
-                PRINT "Invalid Choice, please try again: "
-        WHILE userInput IS NOT EQUAL TO 1 OR userInput IS NOT EQUAL TO 2
-                                                OR userInput IS NOT EQUAL TO 3
+            0:
+                PRINT "Goodbye"
+            DEFAULT
+                PRINT "Invalid Choice, please try again"
+        END CASE
+        WHILE userInput IS NOT EQUAL TO 0
 
         PRINT "*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*"
     END
@@ -119,22 +118,29 @@ BEGIN CLASS TaskTwo
     SUBMODULE: calcControl
     IMPORT: userInput (integer)
     EXPORT: none
-    ASSERTION: To control which calculation is performed
+    ASSERTION: To control the calculations performed.
     BEGIN calcControl
+        DECLARE tempArray: ARRAY [5] OF INTEGERS
         CASE userInput
             
             1:
-                PRINT "Mohamed Salah scored " + sumArray(mohamedSalah) + " goals."
-                PRINT "Harry Kane scored " + sumArray(harryKane) + " goals."
-                PRINT "Lionel Messi scored " + sumArray(lionelMessi) + " goals."
+                tempArray <- mohamedSalah
+                PRINT "Mohamed Salah scored " + sumArray(tempArray) + " goals."
+                tempArray <- harryKane
+                PRINT "Harry Kane scored " + sumArray(tempArray) + " goals."
+                tempArray <- lionelMessi
+                PRINT "Lionel Messi scored " + sumArray(tempArray) + " goals."
 
             2:
+                tempArray <- mohamedSalah
                 PRINT "Mohamed Salah scored an average of " + 
-                                            avgArray(mohamedSalah) + " goals."
+                                     avgArray(tempArray) + " goals per game."
+                tempArray <- harryKane
                 PRINT "Harry Kane scored an average of " +
-                                               avgArray(harryKane) + " goals."
+                                        avgArray(tempArray) + " goals per game."
+                tempArray <- lionelMessi
                 PRINT "Lionel Messi scored an average of " +
-                                             avgArray(lionelMessi) + " goals."
+                                      avgArray(tempArray) + " goals per game."
             3:
                 DECLARE largestArray: ARRAY [5] OF INTEGERS
                 largestArray <- arrayComparison(mohamedSalah, harryKane, lionelMessi)
@@ -177,3 +183,33 @@ BEGIN CLASS TaskTwo
         END IF 
         RETURN name
     END
+
+
+    SUBMODULE: sumArray
+    IMPORT: tempArray 
+    EXPORT: sum (integer)
+    ASSERTION: To calculate the sum of each array.
+    BEGIN sumArray
+        sum (integer) <- 0
+        FOR i (integer) <- 0 TO i IS LESS THAN 5 CHANGEBY 1
+            sum <- sum + tempArray[i]
+        END FOR
+        RETURN sum
+    END
+
+
+    SUBMODULE: avgArray
+    IMPORT: tempArray
+    EXPORT: average (integer)
+    ASSERTION: To calculate the average score of each array
+    BEGIN avgArray
+        sum (integer) <- 0 
+        FOR i (integer) <- 0 TO i IS LESS THAN 5 CHANGEBY 1
+            sum <- sum + tempArray[i]
+        END FOR 
+        average (integer) <- sum / 5
+        RETURN average
+    END
+
+    END
+        END
