@@ -127,6 +127,40 @@
         System.out.println("\nData Entry: ");
     }
 
+    /*************************************************************************
+    *SUBMODULE: menuChoice
+    *IMPORT: mohamedSalah, harryKane, lionelMessi
+    *EXPORT: none
+    *ASSERTION: To prompt the user with a menu, and return the input if valid.
+    **************************************************************************/
+
+    public static void menuChoice(int[] mohamedSalah, int[] harryKane, int[] lionelMessi)
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*");
+        System.out.println("Menu Choice: ");
+        System.out.println("> 1. Display the total number of goals scored by" + 
+                                                                "each player.");
+        System.out.println("> 2. Display the average number of goals scored " + 
+                                                             "by each player.");
+        System.out.println("> 3. Display the highest goal scorer's name and " + 
+                                                            "number of goals.");
+        System.out.print("\nYour choice: ");
+        do
+        {
+            int userInput = sc.nextInt();
+            if (userInput == 1 || userInput == 2 || userInput == 3)
+            {
+                calcControl(userInput);
+            } else {
+                System.out.print("Invalid Choice, please try again: ");
+            }
+        while (userInput != 1 || userInput != 2 || userInput != 3);
+        System.out.println("*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*");
+        }
+    }
+
+    /********
 
 
 

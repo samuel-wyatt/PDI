@@ -91,7 +91,7 @@ BEGIN CLASS TaskTwo
 
 
     SUBMODULE: menuChoice
-    IMPORT: none
+    IMPORT: mohamedSalah, harryKane, lionelMessi
     EXPORT: none
     ASSERTION: To prompt the user with a menu, and return the input if valid.
     BEGIN menuChoice
@@ -108,8 +108,10 @@ BEGIN CLASS TaskTwo
             IS EQUAL TO 3 THEN 
                 calcControl(userInput)
             ELSE 
-                PRINT "Invalid Choice, Please try again: "
-        WHILE validated IS false
+                PRINT "Invalid Choice, please try again: "
+        WHILE userInput IS NOT EQUAL TO 1 OR userInput IS NOT EQUAL TO 2
+                                                OR userInput IS NOT EQUAL TO 3
+
         PRINT "*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*"
     END
 
@@ -136,7 +138,7 @@ BEGIN CLASS TaskTwo
             3:
                 DECLARE largestArray: ARRAY [5] OF INTEGERS
                 largestArray <- arrayComparison(mohamedSalah, harryKane, lionelMessi)
-                name (String) <- arrayName(largestArray)
+                name (String) <- playerName(largestArray)
                 PRINT name + " is the highest goal scorer, with " + 
                 sumArray(largestArray) + " goals."
 
@@ -145,8 +147,8 @@ BEGIN CLASS TaskTwo
 
                  
     SUBMODULE: arrayComparison
-    IMPORT: mohamedSalah[], harryKane[], lionelMessi[]
-    EXPORT: largestArray[]
+    IMPORT: mohamedSalah, harryKane, lionelMessi
+    EXPORT: largestArray
     ASSERTION: To determine which sum of array is largest, and return that array
     BEGIN arrayComparison
         array1 <- sumArray(mohamedSalah)
@@ -162,7 +164,7 @@ BEGIN CLASS TaskTwo
 
 
     SUBMODULE: playerName
-    IMPORT: largestArray[]
+    IMPORT: largestArray
     EXPORT: name (String)
     ASSERTION: To compare the largest array with player arrays to determine name
     BEGIN playerName
