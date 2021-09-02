@@ -26,7 +26,7 @@
     
     System.out.println("===============\nData Entry Complete\n===============");
     
-    //menuChoice();
+    menuChoice(mohamedSalah, harryKane, lionelMessi);
     }
 
     /************************************************
@@ -139,29 +139,92 @@
         Scanner sc = new Scanner(System.in);
         System.out.println("*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*");
         System.out.println("Menu Choice: ");
-        System.out.println("> 1. Display the total number of goals scored by" + 
+        System.out.println("> 1. Display the total number of goals scored by " + 
                                                                 "each player.");
         System.out.println("> 2. Display the average number of goals scored " + 
                                                              "by each player.");
         System.out.println("> 3. Display the highest goal scorer's name and " + 
                                                             "number of goals.");
+        System.out.println("> 0. Exit the program");
         System.out.print("\nYour choice: ");
         do
         {
             int userInput = sc.nextInt();
-            if (userInput == 1 || userInput == 2 || userInput == 3)
+            switch (userInput)
             {
-                calcControl(userInput);
-            } else {
+                case 1: 2: 3:
+                    calcControl(userInput);
+                break;
+                case 0:
+                    System.out.println("Goodbye!");
+                break;
+                default:
                 System.out.print("Invalid Choice, please try again: ");
             }
-        while (userInput != 1 || userInput != 2 || userInput != 3);
+        }
+        while (userInput != 0);
         System.out.println("*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*");
+    }
+    
+    /**************************************************
+    *SUBMODULE: calcControl
+    *IMPORT: userInput
+    *EXPORT: none
+    *ASSERTION: To control the calculations performed.
+    ***************************************************/
+
+    public static void calcControl(int userInput)
+    {
+        int[] tempArray = new int[5];
+        switch (userInput)
+        {
+            case 1:
+                tempArray = mohamedSalah;
+                System.out.println("Mohamed Salah scored " + 
+                                               sumArray(tempArray) + " goals.");
+                tempArray = harryKane;
+                System.out.println("Harry Kane scored " + 
+                                               sumArray(tempArray) + " goals.");
+                tempArray = lionelMessi;
+                System.out.println("Lionel Messi scored " + 
+                                               sumArray(tempArray) + " goals.");
+            break;
+            case 2:
+                tempArray = mohamedSalah;
+                System.out.println("Mohamed Salah scored an average of " + 
+                                   avgArray(tempArray) + " goals per game.");
+                tempArray = harryKane;
+                System.out.println("Harry Kane scored an average of " + 
+                                      avgArray(tempArray) + " goals per game.");
+                tempArray = lionelMessi;
+                System.out.println("Lionel Messi scored an average of " + 
+                                    avgArray(tempArray) + " goals per game.");
+            break;
+            case 3:
+                int[] largestArray = new int[5];
+                largestArray = arrayComparison(mohamedSalah, harryKane, lionelMessi);
+                String name = playerName(largestArray);
+                System.out.println(name + " is the highest goal scorer, with " +
+                    sumArray(largestArray) + " goals.");
+            break;
         }
     }
 
-    /********
+    /**********************************************
+    *SUBMODULE: sumArray
+    *IMPORT: tempArray
+    *EXPORT: sum
+    *ASSERTION: To calcualte the sum of each array.
+    ***********************************************/
 
+    public static int sumArray(int[] tempArray)
+    {
+        int sum = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            sum += tempArray[i];
+        }
+    }
 
 
 }
