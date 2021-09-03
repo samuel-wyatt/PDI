@@ -306,41 +306,45 @@
         lrgArr = arrayComparison(mohamedSalah, harryKane, lionelMessi);
         
         //The sum of lrgArr is created using the sumArray method.
-        int highestGoals;
-        highestGoals = sumArray(lrgArr);
+        int arrSum = sumArray(lrgArr);
+        
+        //The sum of the three arrays are assigned to integers for comparison.
+        int mohSal = sumArray(mohamedSalah);
+        int harKan = sumArray(harryKane);
+        int lioMes = sumArray(lionelMessi);
 
-        /*lrgArr is compared to all three player arrays, then combinations of
-          two, and then finally individually to determine if multiple players
-          have the same total amount of goals, and the relevant message is 
-          out. */
-        if(Arrays.equals(lrgArr,mohamedSalah)&&Arrays.equals(lrgArr,harryKane)&&Arrays.equals(lrgArr,lionelMessi))
+        /*lrgArr is compared to the sum of all three player arrays, then 
+          combinations of two, and then finally individually to determine 
+          if multiple players have the same total amount of goals, and the 
+          relevant message is output. */
+        if ((arrSum == mohSal) && (arrSum == harKan) && (arrSum == lioMes))
         {
             System.out.println("Mohamed Salah, Harry Kane and Lionel Messi " +
-            "all scored the same amount, with " + highestGoals + " goals.");
-        } else if(Arrays.equals(lrgArr, mohamedSalah) && Arrays.equals(lrgArr,harryKane))
+                      "all scored the same amount, with " + arrSum + " goals.");
+        } else if((arrSum == mohSal) && (arrSum == harKan))
         {
             System.out.println("Mohamed Salah and Harry Kane are the equal " +
-                                   "highest, with " + highestGoals + " goals.");
-        } else if(Arrays.equals(lrgArr,mohamedSalah)&&Arrays.equals(lrgArr,lionelMessi))
+                                         "highest, with " + arrSum + " goals.");
+        } else if((arrSum == mohSal) && (arrSum == lioMes))
         {
             System.out.println("Mohamed Salah and Lionel Messi are the equal" +
-                                  " highest, with " + highestGoals + " goals.");
-        } else if(Arrays.equals(lrgArr,harryKane)&&Arrays.equals(lrgArr,lionelMessi))
+                                        " highest, with " + arrSum + " goals.");
+        } else if((arrSum == harKan) && (arrSum == lioMes))
         {
             System.out.println("Harry Kane and Lionel Messi are the equal " +
-                                   "highest, with " + highestGoals + " goals.");
-        } else if (Arrays.equals(lrgArr, mohamedSalah))
+                                         "highest, with " + arrSum + " goals.");
+        } else if (arrSum == mohSal)
         {
             System.out.println("Mohamed Salah scored the highest, with " +
-                                                      highestGoals + " goals.");
-        } else if (Arrays.equals(lrgArr, harryKane))
+                                                            arrSum + " goals.");
+        } else if (arrSum == harKan)
         {
             System.out.println("Harry Kane scored the highest, with " + 
-                                                      highestGoals + " goals.");
-        } else if (Arrays.equals(lrgArr, lionelMessi))
+                                                            arrSum + " goals.");
+        } else if (arrSum == lioMes)
         {
             System.out.println("Lionel Messi scored the highest, with " +
-                                                      highestGoals + " goals.");
+                                                            arrSum + " goals.");
         } 
     } 
 }
