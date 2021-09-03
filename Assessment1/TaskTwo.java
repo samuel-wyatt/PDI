@@ -7,28 +7,31 @@
  import java.util.*;
  public class TaskTwo
  {
-    Scanner sc = new Scanner(System.in);
-
     public static void main(String[] args)
     {
-    initialMsg();
+        //Calls the initialMsg method, printing the title of the program.
+        initialMsg();
 
-    int[] mohamedSalah = new int[5];
-    mohamedSalah = mohamedSalahArray();
-    System.out.println("---------------");
+        //Creates an array, and fills it by calling the method for that array.
+        int[] mohamedSalah = new int[5];
+        mohamedSalah = mohamedSalahArray();
+        System.out.println("---------------");
     
-    int[] harryKane = new int[5];
-    harryKane = harryKaneArray();
-    System.out.println("---------------");
+        int[] harryKane = new int[5];
+        harryKane = harryKaneArray();
+        System.out.println("---------------");
     
-    int[] lionelMessi = new int[5];
-    lionelMessi = lionelMessiArray();
+        int[] lionelMessi = new int[5];
+        lionelMessi = lionelMessiArray();
     
-    System.out.println("===============\nData Entry Complete\n===============");
-    
-    menuChoice(mohamedSalah, harryKane, lionelMessi);
+        System.out.println("===============\nData Entry Complete\n===============");
+        int userInput;
+        do
+        {
+            menuMsg();
+            userInput = menuChoice(mohamedSalah, harryKane, lionelMessi);
+        } while (userInput != 0);  
     }
-
     /************************************************
     *SUBMODULE: mohamedSalahArray
     *IMPORT: none
@@ -114,7 +117,7 @@
     *SUBMODULE: initalMsg
     *IMPORT: none
     *EXPORT: none
-    *ASSERTION: Print the initial message for the program
+    *ASSERTION: Print the initial message of the program
     ******************************************************/ 
 
     public static void initialMsg()
@@ -127,16 +130,15 @@
         System.out.println("\nData Entry: ");
     }
 
-    /*************************************************************************
-    *SUBMODULE: menuChoice
-    *IMPORT: mohamedSalah, harryKane, lionelMessi
+    /****************************************************
+    *SUBMODULE: menuMsg
+    *IMPORT: none
     *EXPORT: none
-    *ASSERTION: To prompt the user with a menu, and return the input if valid.
-    **************************************************************************/
+    *ASSERTION: To print the menu message of the program
+    *****************************************************/
 
-    public static void menuChoice(int[] mohamedSalah, int[] harryKane, int[] lionelMessi)
+    public static void menuMsg()
     {
-        Scanner sc = new Scanner(System.in);
         System.out.println("*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*");
         System.out.println("Menu Choice: ");
         System.out.println("> 1. Display the total number of goals scored by " + 
@@ -147,67 +149,118 @@
                                                             "number of goals.");
         System.out.println("> 0. Exit the program");
         System.out.print("\nYour choice: ");
+    }
+
+    /*************************************************************************
+    *SUBMODULE: menuChoice
+    *IMPORT: mohamedSalah, harryKane, lionelMessi
+    *EXPORT: userInput (integer)
+    *ASSERTION: To control the input and output of the menu. 
+    **************************************************************************/
+
+    public static int menuChoice(int[] mohamedSalah, int[] harryKane, int[] lionelMessi)
+    {
+        Scanner sc = new Scanner(System.in);
+        int userInput = sc.nextInt();
         do
         {
-            int userInput = sc.nextInt();
             switch (userInput)
             {
-                case 1: 2: 3:
-                    calcControl(userInput);
+                case 1: 
+                    totalGoals(mohamedSalah, harryKane, lionelMessi);    
+                break;
+                case 2: 
+                    averageGoals(mohamedSalah, harryKane, lionelMessi);
+                break;
+                case 3:
+                    highestGoals(mohamedSalah, harryKane, lionelMessi);
                 break;
                 case 0:
-                    System.out.println("Goodbye!");
-                break;
+                    return userInput;
                 default:
                 System.out.print("Invalid Choice, please try again: ");
-            }
+                userInput = sc.nextInt();
+            }   
+
         }
-        while (userInput != 0);
+        while (userInput == 0);
+        System.out.println();
         System.out.println("*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*");
+        return userInput;
     }
     
-    /**************************************************
-    *SUBMODULE: calcControl
-    *IMPORT: userInput
+    /****************************************************************
+    *SUBMODULE: totalGoals
+    *IMPORT: mohamedSalah, harryKane, lionelMessi
     *EXPORT: none
-    *ASSERTION: To control the calculations performed.
-    ***************************************************/
+    *ASSERTION: To run menu choice 1, the sum of each player's goals
+    ****************************************************************/
 
-    public static void calcControl(int userInput)
+    public static void totalGoals(int[] mohamedSalah, int[] harryKane, int[] lionelMessi)
     {
         int[] tempArray = new int[5];
-        switch (userInput)
+        tempArray = mohamedSalah;
+        int sum = sumArray(tempArray);
+        if (sum == 1)
         {
-            case 1:
-                tempArray = mohamedSalah;
-                System.out.println("Mohamed Salah scored " + 
-                                               sumArray(tempArray) + " goals.");
-                tempArray = harryKane;
-                System.out.println("Harry Kane scored " + 
-                                               sumArray(tempArray) + " goals.");
-                tempArray = lionelMessi;
-                System.out.println("Lionel Messi scored " + 
-                                               sumArray(tempArray) + " goals.");
-            break;
-            case 2:
-                tempArray = mohamedSalah;
-                System.out.println("Mohamed Salah scored an average of " + 
-                                   avgArray(tempArray) + " goals per game.");
-                tempArray = harryKane;
-                System.out.println("Harry Kane scored an average of " + 
-                                      avgArray(tempArray) + " goals per game.");
-                tempArray = lionelMessi;
-                System.out.println("Lionel Messi scored an average of " + 
-                                    avgArray(tempArray) + " goals per game.");
-            break;
-            case 3:
-                int[] largestArray = new int[5];
-                largestArray = arrayComparison(mohamedSalah, harryKane, lionelMessi);
-                String name = playerName(largestArray);
-                System.out.println(name + " is the highest goal scorer, with " +
-                    sumArray(largestArray) + " goals.");
-            break;
+            System.out.println("Mohamed Salah scored " + sum + "goal.");
+        } else {
+            System.out.println("Mohamed Salah scored " + sum + " goals.");
         }
+        tempArray = harryKane;
+        sum = sumArray(tempArray);
+        if (sum == 1)
+        {
+            System.out.println("Harry Kane scored " + sum + " goal.");
+        } else {
+                System.out.println("Harry Kane scored " + sum + " goals.");
+        }
+        tempArray = lionelMessi;
+        sum = sumArray(tempArray);
+        if (sum == 1)
+        {
+            System.out.println("Lionel Messi scored "+ sum + " goal.");
+        } else {
+            System.out.println("Lionel Messi scored " + sum + " goals.");
+        }
+    }
+
+    /*******************************************************************
+    *SUBMODULE: averageGoals
+    *IMPORT: mohamedSalah, harryKane, lionelMessi
+    *EXPORT: none
+    *ASSERTION: To run menu choice 2, the average of each player's goals.
+    *******************************************************************/
+    
+    public static void averageGoals(int[] mohamedSalah, int[] harryKane, int[] lionelMessi)
+    {
+        int[] tempArray = new int[5];
+        tempArray = mohamedSalah;
+        System.out.println("Mohamed Salah scored an average of " + 
+                                   avgArray(tempArray) + " goals per game.");
+        tempArray = harryKane;
+        System.out.println("Harry Kane scored an average of " + 
+                                      avgArray(tempArray) + " goals per game.");
+        tempArray = lionelMessi;
+        System.out.println("Lionel Messi scored an average of " + 
+                                    avgArray(tempArray) + " goals per game.");
+    }
+
+    /*******************************************************************
+    *SUBMODULE: highestGoals
+    *IMPORT: mohamedSalah, harryKane, lionelMessi
+    *EXPORT: none
+    *ASSERTION: To run menu choice 3, displaying the highest goal scorer.
+    *******************************************************************/
+
+    public static void highestGoals(int[] mohamedSalah, int[] harryKane, int[] lionelMessi)
+    {
+        int[] largestArray = new int[5];
+        largestArray = arrayComparison(mohamedSalah, harryKane, lionelMessi);
+        String name; 
+        name = playerName(largestArray, mohamedSalah, harryKane);
+        System.out.println(name + " is the highest goal scorer, with " +
+                                        sumArray(largestArray) + " goals.");
     }
 
     /**********************************************
@@ -224,7 +277,74 @@
         {
             sum += tempArray[i];
         }
+        return sum;
+    }
+    
+    /*****************************************************************
+    *SUBMODULE: avgArray
+    *IMPORT: tempArray
+    *EXPORT: average (integer)
+    *ASSERTION: To find the average of an array, and return the result
+    ******************************************************************/
+
+    public static double avgArray(int[] tempArray)
+    {
+        int sum = 0;
+        double average;
+        for (int i = 0; i < 5; i++)
+        {
+            sum += tempArray[i];
+        }
+        average = (double)sum / 5.0;
+        return average;
     }
 
+    /******************************************************************************
+    *SUBMODULE: arrayComparison
+    *IMPORT: mohamedSalah, harryKane, lionelMessi)
+    *EXPORT: largestArray
+    *ASSERTION: To compare 3 arrays, and return the array with the largest sum of variables.
+    ******************************************************************************/
 
+    public static int[] arrayComparison(int[] mohamedSalah, int[] harryKane, int[] lionelMessi)
+    {
+        int array1 = sumArray(mohamedSalah);
+        int array2 = sumArray(harryKane);
+        int array3 = sumArray(lionelMessi);
+        int[] largestArray = new int[5];
+        if (array1 > array2 && array1 > array3)
+        {
+            largestArray = mohamedSalah;
+        } else if (array2 > array1 && array2 > array3)
+        {
+            largestArray = harryKane;
+        } else if (array3 > array1 && array3 > array2)
+        {
+            largestArray = lionelMessi;
+        }
+        return largestArray;
+    }
+
+    /************************************************************************
+    *SUBMODULE: playerName
+    *IMPORT: largestArray, mohamedSalah, harryKane, lionelMessi
+    *EXPORT: name (String)
+    *ASSERTION: To compare largestArray with player arrays to determine name.
+    *************************************************************************/
+
+    public static String playerName(int[] largestArray, int[] mohamedSalah, int[] harryKane)
+    {
+        String name;
+        if (Arrays.equals(largestArray, mohamedSalah))
+        {
+            name = "Mohamed Salah";
+        } else if (Arrays.equals(largestArray, harryKane))
+        {
+            name = "Harry Kane";
+        } else
+        {
+            name = "Lionel Messi";
+        }
+        return name;
+    }
 }

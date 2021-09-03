@@ -5,6 +5,8 @@
  ***********************************
 
 BEGIN CLASS TaskTwo
+    BEGIN MAIN
+
         initialMsg()
 
         DECLARE mohamedSalah: ARRAY [5] OF INTEGERS
@@ -19,7 +21,8 @@ BEGIN CLASS TaskTwo
         PRINT "Data Entry Complete"
         PRINT "==================="
         
-        menuChoice()
+        menuChoice(mohamedSalah, harryKane, lionelMessi)
+    
     END MAIN       
     
 
@@ -155,17 +158,20 @@ BEGIN CLASS TaskTwo
     SUBMODULE: arrayComparison
     IMPORT: mohamedSalah, harryKane, lionelMessi
     EXPORT: largestArray
-    ASSERTION: To determine which sum of array is largest, and return that array
+    ASSERTION: To compare 3 arrays, and return the array with largest sum of variables.
     BEGIN arrayComparison
         array1 <- sumArray(mohamedSalah)
         array2 <- sumArray(harryKane)
         array3 <- sumArray(lionelMessi)
+        DECLARE largestArray: ARRAY [5] OF INTEGERS
         IF array1 IS GREATER THAN array2 AND array1 IS GREATER THAN array3 THEN
-            return mohamedSalah
+            largestArray <- mohamedSalah
         ELSE IF array2 IS GREATER THAN array1 AND array2 IS GREATER THAN array3 THEN
-            return harryKane
+            largestArray <- harryKane
         ELSE IF array3 IS GREATER THAN array1 AND array3 IS GREATER THAN array2 THEN
-            return lionelMessi
+            largestArray <- lionelMessi
+        END IF
+        RETURN largestArray
     END
 
 
