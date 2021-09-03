@@ -1,6 +1,6 @@
 /**********************************
  *Author: Samuel Wyatt (20555535) *
- *Date: 02/09/2021                *
+ *Date: 02/09/2021 - 03/09/2021   *
  *Purpose: Assignment 1 Java Code *
  *File Name: TaskTwo.java         *
  **********************************/
@@ -48,7 +48,7 @@
     *SUBMODULE: createArray
     *IMPORT: none
     *EXPORT: newArray (ARRAY)
-    *ASSERTION: To fill the arrays with user input.
+    *ASSERTION: To fill an array with user input.
     *************************************************/
     public static int[] createArray()
     {
@@ -117,11 +117,11 @@
     /*******************************************************
     *SUBMODULE: menuChoice
     *IMPORT: mohamedSalah (ARRAY), harryKane (ARRAY), lionelMessi (ARRAY)
-    *EXPORT: userInput (INTEGER)
+    *EXPORT: none
     *ASSERTION: To control the input and output of the menu. 
     ********************************************************/
 
-    public static int menuChoice(int[]mohamedSalah,int[]harryKane,int[]lionelMessi)
+    public static void menuChoice(int[]mohamedSalah,int[]harryKane,int[]lionelMessi)
     {
         Scanner sc = new Scanner(System.in);
 
@@ -159,22 +159,22 @@
                 case 0:
 
                 break;
+
                 //Error message if input is invalid.
                 default:
                     System.out.print("Invalid Choice, please try again: \n");
                     userInput = sc.nextInt();
             }   
-            //Loop will only end if 0 is input, which is "Exit the Program"
-            // on the menu.
+            /*Loop will only end if 0 is input, which is "Exit the Program"
+              on the menu.*/ 
         } while (userInput != 0);
-        return userInput;
     }
     
     /****************************************************************
     *SUBMODULE: totalGoals
     *IMPORT: mohamedSalah (ARRAY), harryKane (ARRAY), lionelMessi (ARRAY)
     *EXPORT: none
-    *ASSERTION: To run menu choice 1, the sum of each player's goals.
+    *ASSERTION: To run menu choice 1: the sum of each player's goals.
     ****************************************************************/
 
     public static void totalGoals(int[]mohamedSalah,int[]harryKane,int[]lionelMessi)
@@ -184,7 +184,7 @@
         int sum = sumArray(mohamedSalah);
         if (sum == 1)
         {
-            System.out.println("Mohamed Salah scored " + sum + "goal.");
+            System.out.println("Mohamed Salah scored 1 goal.");
         } else {
             System.out.println("Mohamed Salah scored " + sum + " goals.");
         }
@@ -192,7 +192,7 @@
         sum = sumArray(harryKane);
         if (sum == 1)
         {
-            System.out.println("Harry Kane scored " + sum + " goal.");
+            System.out.println("Harry Kane scored 1 goal.");
         } else {
             System.out.println("Harry Kane scored " + sum + " goals.");
         }
@@ -200,7 +200,7 @@
         sum = sumArray(lionelMessi);
         if (sum == 1)
         {
-            System.out.println("Lionel Messi scored " + sum + " goal.");
+            System.out.println("Lionel Messi scored 1 goal.");
         } else {
             System.out.println("Lionel Messi scored " + sum + " goals.");
         }
@@ -210,7 +210,7 @@
     *SUBMODULE: averageGoals
     *IMPORT: mohamedSalah (ARRAY), harryKane (ARRAY), lionelMessi (ARRAY)
     *EXPORT: none
-    *ASSERTION: To run menu choice 2, the average of each player's goals.
+    *ASSERTION: To run menu choice 2: the average of each player's goals.
     *******************************************************************/
     
     public static void averageGoals(int[]mohamedSalah,int[]harryKane,int[]lionelMessi)
@@ -327,8 +327,8 @@
                                          "highest, with " + arrSum + " goals.");
         } else if((arrSum == mohSal) && (arrSum == lioMes))
         {
-            System.out.println("Mohamed Salah and Lionel Messi are the equal" +
-                                        " highest, with " + arrSum + " goals.");
+            System.out.println("Mohamed Salah and Lionel Messi are the equal " +
+                                         "highest, with " + arrSum + " goals.");
         } else if((arrSum == harKan) && (arrSum == lioMes))
         {
             System.out.println("Harry Kane and Lionel Messi are the equal " +

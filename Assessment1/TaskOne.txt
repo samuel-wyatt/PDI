@@ -1,83 +1,60 @@
  ***********************************
  *Author: Samuel Wyatt (20555535)  *
- *Date: 02/09/2021                 *
+ *Date: 02/09/2021 - 03/09/2021    *
  *Purpose: Assignment 1 Psuedocode *
+ *File Name: TaskOne.txt           *
  ***********************************
 
 BEGIN CLASS TaskTwo
     BEGIN MAIN
-
         initialMsg()
 
+        PRINT "Please enter the goals scored by Mohamed Salah: "
         DECLARE mohamedSalah: ARRAY [5] OF INTEGERS
-        mohamedSalah <- mohamedSalahArray()
+        mohamedSalah <- createArray()
+
         PRINT "---------------"
+
+        PRINT "Please enter the goals scored by Harry Kane: "
         DECLARE harryKane: ARRAY [5] OF INTEGERS
-        harryKane <- harryKaneArray()
+        harryKane <- createArray()
+
         PRINT "---------------"
+
+        PRINT "Please enter the goals scored by Lionel Messi: "
         DECLARE lionelMessi: ARRAY [5] OF INTEGERS
-        lionelMessi <- lionelMessiArray()
+        lionelMessi <- createArray()
+
         PRINT "==================="
         PRINT "Data Entry Complete"
         PRINT "==================="
         
+        menuMsg()
         menuChoice(mohamedSalah, harryKane, lionelMessi)
-    
+        PRINT "Goodbye"
     END MAIN       
     
 
-    SUBMODULE: mohamedSalahArray
+    SUBMODULE: createArray
     IMPORT: none
-    EXPORT: none
-    ASSERTION: To fill mohamedSalah with user elements
-    BEGIN mohamedSalahArray
-        PRINT "Please enter the goals scored by Mohamed Salah:"
+    EXPORT: newArray (ARRAY)
+    ASSERTION: To fill an array with user input.
+    BEGIN createArray
         FOR i (integer) <- 0 TO i IS LESS THAN 5 CHANGEBY 1
             PRINT "Week " + (i + 1) + ": "
-            mohamedSalah[i] <- GET USER INPUT 
-            IF mohamedSalah[i] IS LESS THAN 0 THEN
-                mohamedSalah[i] <- 0
+            newArray[i] <- GET USER INPUT 
+            IF newArray[i] IS LESS THAN 0 THEN
+                newArray[i] <- 0
             END IF
         END FOR
+        RETURN newArray
     END
     
-
-    SUBMODULE: harryKaneArray
-    IMPORT: none
-    EXPORT: none
-    ASSERTION: To fill harryKane with user elements
-    BEGIN harryKaneArray
-        PRINT "Please enter the goals scored by Harry Kane:"
-        FOR i (integer) <- 0 TO i IS LESS THAN 5 CHANGEBY 1
-            PRINT "Week " + (i + 1) + ": "
-            harryKane[i] <- GET USER INPUT 
-            IF harryKane[i] IS LESS THAN 0 THEN
-                harryKane[i] <- 0
-            END IF
-        END FOR
-    END
-
-
-    SUBMODULE: lionelMessiArray
-    IMPORT: none
-    EXPORT: none
-    ASSERTION: To fill lionelMessi with user elements.
-    BEGIN lionelMessiArray
-        PRINT "Please enter the goals scored by Lionel Messi:"
-        FOR i (integer) <- 0 TO i IS LESS THAN 5 CHANGEBY 1
-            PRINT "Week " + (i + 1) + ": "
-            lionelMessi[i] <- GET USER INPUT 
-            IF lionelMessi[i] IS LESS THAN 0 THEN
-                lionelMessi[i] <- 0
-            END IF
-        END FOR
-    END
-
-
+    
     SUBMODULE: initialMsg
     IMPORT: none
     EXPORT: none
-    ASSERTION: To print the inital message for the program
+    ASSERTION: To print the inital message of the program
     BEGIN initialMsg
         PRINT "*************************************************"
         PRINT "| Welcome to the Golden Boot Tracker Program    |"
@@ -89,11 +66,11 @@ BEGIN CLASS TaskTwo
     END 
 
 
-    SUBMODULE: menuChoice
-    IMPORT: mohamedSalah, harryKane, lionelMessi
+    SUBMODULE: menuMsg
+    IMPORT: none
     EXPORT: none
-    ASSERTION: To prompt the user with a menu, and return the input if valid.
-    BEGIN menuChoice
+    ASSERTION: To print the menu message of the program.
+    BEGIN menuMsg
         PRINT "*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*"
         PRINT "Menu Choice:"
         PRINT "> 1. Display the total number of goals scored by each player."
@@ -102,98 +79,84 @@ BEGIN CLASS TaskTwo
         PRINT "> 0. Exit the program."
         PRINT " "
         PRINT "Your choice: "
-        DO
-        userInput (integer) <- GET USER INPUT
-        CASE userInput
-            1: 2: 3:
-                calcControl(userInput)
-            0:
-                PRINT "Goodbye"
-            DEFAULT
-                PRINT "Invalid Choice, please try again"
-        END CASE
-        WHILE userInput IS NOT EQUAL TO 0
-
-        PRINT "*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*-+*"
     END
 
 
-    SUBMODULE: calcControl
-    IMPORT: userInput (integer)
+    SUBMODULE: menuChoice
+    IMPORT: mohamedSalah (ARRAY), harryKane (ARRAY), lionelMessi (ARRAY)
     EXPORT: none
-    ASSERTION: To control the calculations performed.
-    BEGIN calcControl
-        DECLARE tempArray: ARRAY [5] OF INTEGERS
-        CASE userInput
+    ASSERTION: To control the input and output of the menu.
+    BEGIN menuChoice
+        userInput <- GET USER INPUT
+        DO
+            CASE userInput
             
-            1:
-                tempArray <- mohamedSalah
-                PRINT "Mohamed Salah scored " + sumArray(tempArray) + " goals."
-                tempArray <- harryKane
-                PRINT "Harry Kane scored " + sumArray(tempArray) + " goals."
-                tempArray <- lionelMessi
-                PRINT "Lionel Messi scored " + sumArray(tempArray) + " goals."
-
-            2:
-                tempArray <- mohamedSalah
-                PRINT "Mohamed Salah scored an average of " + 
-                                     avgArray(tempArray) + " goals per game."
-                tempArray <- harryKane
-                PRINT "Harry Kane scored an average of " +
-                                        avgArray(tempArray) + " goals per game."
-                tempArray <- lionelMessi
-                PRINT "Lionel Messi scored an average of " +
-                                      avgArray(tempArray) + " goals per game."
-            3:
-                DECLARE largestArray: ARRAY [5] OF INTEGERS
-                largestArray <- arrayComparison(mohamedSalah, harryKane, lionelMessi)
-                name (String) <- playerName(largestArray)
-                PRINT name + " is the highest goal scorer, with " + 
-                sumArray(largestArray) + " goals."
-
-        END CASE
+                1:
+                    totalGoals(mohamedSalah, harryKane, lionelMessi)
+                    menuMsg()
+                    userInput <- GET USER INPUT
+                2:
+                    averageGoals(mohamedSalah, harryKane, lionelMessi)
+                    menuMsg()
+                    userInput <- GET USER INPUT
+                3:
+                    highestPlayer(mohamedSalah, harryKane, lionelMessi)
+                    menuMsg()
+                    userInput <- GET USER INPUT
+                0:
+            
+                DEFAULT:
+                    PRINT "INVALID CHOICE, please try again"
+                    userInput <- GET USER INPUT
+            END CASE
+        WHILE userInput IS NOT EQUAL TO 0
     END
 
                  
-    SUBMODULE: arrayComparison
-    IMPORT: mohamedSalah, harryKane, lionelMessi
-    EXPORT: largestArray
-    ASSERTION: To compare 3 arrays, and return the array with largest sum of variables.
-    BEGIN arrayComparison
-        array1 <- sumArray(mohamedSalah)
-        array2 <- sumArray(harryKane)
-        array3 <- sumArray(lionelMessi)
-        DECLARE largestArray: ARRAY [5] OF INTEGERS
-        IF array1 IS GREATER THAN array2 AND array1 IS GREATER THAN array3 THEN
-            largestArray <- mohamedSalah
-        ELSE IF array2 IS GREATER THAN array1 AND array2 IS GREATER THAN array3 THEN
-            largestArray <- harryKane
-        ELSE IF array3 IS GREATER THAN array1 AND array3 IS GREATER THAN array2 THEN
-            largestArray <- lionelMessi
-        END IF
-        RETURN largestArray
+    SUBMODULE: totalGoals
+    IMPORT: mohamedSalah (ARRAY), harryKane (ARRAY), lionelMessi (ARRAY)
+    EXPORT: none
+    ASSERTION: To run menu choice 1: the sum of each player's goals.
+    BEGIN totalGoals
+        sum (integer) <- sumArray(mohamedSalah)
+        IF sum IS EQUAL TO 1 THEN
+            PRINT "Mohamed Salah scored 1 goal."
+        ELSE
+            PRINT "Mohamed Salah scored " + sum + " goals."
+
+        sum (integer) <- sumArray(harryKane)
+        IF sum IS EQUAL TO 1 THEN
+            PRINT "Harry Kane scored 1 goal."
+        ELSE
+            PRINT "Harry Kane scored " + sum + " goals."
+
+        sum (integer) <- sumArray(lionelMessi)
+        IF sum IS EQUAL TO 1 THEN
+            PRINT "Lionel Messi scored 1 goal."
+        ELSE 
+            PRINT "Lionel Messi scored " + sum + " goals."
     END
 
 
-    SUBMODULE: playerName
-    IMPORT: largestArray
-    EXPORT: name (String)
-    ASSERTION: To compare the largest array with player arrays to determine name
-    BEGIN playerName
-        IF largestArray AND mohamedSalah HAVE THE SAME ELEMENTS THEN
-            name (String) <- "Mohamed Salah"
-        ELSE IF largestArray AND harryKane HAVE THE SAME ELEMENTS THEN 
-            name (String) <- "Harry Kane"
-        ELSE IF largestArray AND lionelMessi HAVE THE SAME ELEMENTS THEN
-            name (String) <- "Lionel Messi"
-        END IF 
-        RETURN name
+    SUBMODULE: averageGoals
+    IMPORT: mohamedSalah (ARRAY), harryKane (ARRAY), lionelMessi (ARRAY)
+    EXPORT: none
+    ASSERTION: To run menu choice 2: the average of each player's goals.
+    BEGIN averageGoals
+        PRINT "Mohamed Salah scored an average of " + 
+                     ((double)sumArray(mohamedSalah) / 5.0) + " goals per game."
+        
+        PRINT "Harry Kane scored an average of " + 
+                        ((double)sumArray(harryKane) / 5.0) + " goals per game."
+        
+        PRINT "Lionel Messi scored an average of " +
+                      ((double)sumArray(lionelMessi) / 5.0) + " goals per game."
     END
 
 
     SUBMODULE: sumArray
-    IMPORT: tempArray 
-    EXPORT: sum (integer)
+    IMPORT: tempArray (ARRAY)
+    EXPORT: sum (INTEGER)
     ASSERTION: To calculate the sum of each array.
     BEGIN sumArray
         sum (integer) <- 0
@@ -204,18 +167,82 @@ BEGIN CLASS TaskTwo
     END
 
 
-    SUBMODULE: avgArray
-    IMPORT: tempArray
-    EXPORT: average (integer)
-    ASSERTION: To calculate the average score of each array
-    BEGIN avgArray
-        sum (integer) <- 0 
-        FOR i (integer) <- 0 TO i IS LESS THAN 5 CHANGEBY 1
-            sum <- sum + tempArray[i]
-        END FOR 
-        average (integer) <- sum / 5
-        RETURN average
+    SUBMODULE: arrayComparison
+    IMPORT: mohamedSalah (ARRAY), harryKane (ARRAY), lionelMessi (ARRAY)
+    EXPORT: largestArray (ARRAY)
+    ASSERTION: To compare 3 arrays, and return the array with largest 
+               sum of elements.
+    BEGIN arrayComparison
+        array1 (integer) <- sumArray(mohamedSalah)
+        array2 (integer) <- sumArray(harryKane)
+        array3 (integer) <- sumArray(lionelMessi)
+        DECLARE largestArray: ARRAY [5] OF INTEGERS
+        
+        IF array1 IS GREATER THAN array2 AND array1 IS GREATER THAN array3 THEN
+            largestArray <- mohamedSalah
+        
+        ELSE IF array2 IS GREATER THAN array1 AND array2 IS GREATER THAN array3 THEN
+            largestArray <- harryKane
+        
+        ELSE IF array3 IS GREATER THAN array1 AND array3 IS GREATER THAN array2 THEN
+            largestArray <- lionelMessi
+        
+        ELSE IF array1 IS EQUAL TO array2 THEN
+            largestArray <- mohamedSalah
+        
+        ELSE IF array1 IS EQUAL TO array3 THEN
+            largestArray <- mohamedSalah
+        
+        ELSE IF array2 IS EQUAL TO array3 THEN
+            largestArray <- harryKane
+        
+        ELSE 
+            largestArray <- mohamedSalah
+        END IF 
+        RETURN largestArray
     END
 
+
+    SUBMODULE: highestPlayer
+    IMPORT: mohamedSalah (ARRAY), harryKane (ARRAY), lionelMessi (ARRAY)
+    EXPORT: none
+    ASSERTION: To determine the player/s with the highest score, and print it.
+    BEGIN highestPlayer
+        DECLARE lrgArr: ARRAY [5] OF INTEGERS
+        lrgArr <- arrayComparison(mohamedSalah, harryKane, lionelMessi)
+
+        arrSum (integer) <- sumArray(lrgArr)
+
+        int mohSal <- sumArray(mohamedSalah)
+        int harKan <- sumArray(harryKane)
+        int lioMes <- sumArray(lionelMessi)
+
+        IF arrSum IS EQUAL TO mohSal AND arrSum IS EQUAL TO harKan AND 
+                                                  arrSum IS EQUAL TO lioMes THEN
+            PRINT "Mohamed Salah, Harry Kane and Lionel Messi all scored the 
+                   same amount, with " + arrSum + " goals."
+        
+        ELSE IF arrSum IS EQUAL TO mohSal AND arrSum IS EQUAL TO harKan THEN
+            PRINT "Mohamed Salah and Harry Kane are the equal highest with " +
+                   arrSum + " goals."
+        
+        ELSE IF arrSum IS EQUAL TO mohSal AND arrSum IS EQUAL TO lioMes THEN
+            PRINT "Mohamed Salah and Lionel Messi are the equal highest, with "
+            + arrSum + " goals."
+
+        ELSE IF arrSum IS EQUAL TO harKan AND arrSum IS EQUAL TO lioMes THEN
+            PRINT "Harry Kane and Lionel Messi are the equal highest, with " +
+            arrSum + " goals."
+        
+        ELSE IF arrSum IS EQUAL TO mohSal THEN
+            PRINT "Mohamed Salah scored the highest with " + arrSum + " goals."
+
+        ELSE IF arrSum IS EQUAL TO harKan THEN
+            PRINT "Harry Kane scored the highest with " + arrSum + " goals."
+
+        ELSE IF arrSum IS EQUAL TO lioMes THEN
+            PRINT "Lionel Messi scored the highest with " + arrSum + " goals."
+        END IF 
     END
-        END
+END CLASS
+    
