@@ -317,15 +317,15 @@
         {
             System.out.println("Mohamed Salah, Harry Kane and Lionel Messi " +
             "all scored the same amount, with " + highestGoals + " goals.");
-        } else if (Arrays.equals(lrgArr, mohamedSalah) && Arrays.equals(lrgArr,harryKane))
+        } else if(Arrays.equals(lrgArr, mohamedSalah) && Arrays.equals(lrgArr,harryKane))
         {
             System.out.println("Mohamed Salah and Harry Kane are the equal " +
                                    "highest, with " + highestGoals + " goals.");
-        } else if (Arrays.equals(lrgArr, mohamedSalah) && Arrays.equals(lrgArr,lionelMessi))
+        } else if(Arrays.equals(lrgArr,mohamedSalah)&&Arrays.equals(lrgArr,lionelMessi))
         {
             System.out.println("Mohamed Salah and Lionel Messi are the equal" +
                                   " highest, with " + highestGoals + " goals.");
-        } else if (Arrays.equals(lrgArr, harryKane) && Arrays.equals(lrgArr, lionelMessi))
+        } else if(Arrays.equals(lrgArr,harryKane)&&Arrays.equals(lrgArr,lionelMessi))
         {
             System.out.println("Harry Kane and Lionel Messi are the equal " +
                                    "highest, with " + highestGoals + " goals.");
