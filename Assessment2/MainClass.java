@@ -16,43 +16,75 @@ public class MainClass
     EXPORT: CovidCase (CovidCase[])
     ASSERTION: To read the data file, and return an array containing CovidCase objects.
     */  
-    public static CovidCase[] readCSV(String pFileName);
+    public static void readCSV(String pFileName)
     {
-        int lineNum = 0;
-        String line;
         FileInputStream fileStream = null;
         InputStreamReader isr;
         BufferedReader bufRdr;
+        int lineNum;
+        String line;
         try
         {
             fileStream = new FileInputStream(pFileName);
             isr = new InputStreamReader(fileStream);
             bufRdr = new BufferedReader(isr);
+            lineNum = 0;
             line = bufRdr.readLine();
-            while (line != null)
+            while (line != null) 
             {
                 lineNum++;
                 line = bufRdr.readLine();
             }
             fileStream.close();
+            
+            fileStream = new FileInputStream(pFileName);
+            isr = new InputStreamReader(fileStream);
+            bufRdr = new BufferedReader(isr);
+            lineNum = 0;
+            line = bufRdr.readLine();
+ 
+            while (line != null)
+            {
+                parseLine(line, lineNum);
+                line = bufRdr.readLine();
+            }
+            fileStream.close();
         } 
-        catch (IOException e) 
+        catch (IOException errorDetails)
         {
             if (fileStream != null)
             {
                 try 
                 {
                     fileStream.close();
-                } 
-                catch (IOException ex2)
-                { 
                 }
+                catch (IOException ex2)
+                { }
             }
-            System.out.println("Error in fileProcessing: " + e.getMessage());
-        
+            System.out.println("Error in processing file: " + errorDetails.getMessage());
         }
     }
-                
+    
+    /*
+    SUBMODULE: parseLine
+    IMPORT: line (String), lineNum (integer)
+    EXPORT: None
+    ASSERTION: To parse the CSV row into a CovidCase object.
+    */
+    public static void parseLine(String csvLine, int lineNum)
+    {
+        String[] splitLine;
+        splitLine = csvLine.split(",");
+        int lineLength = splitLine.length;
+        
+        for(int i = 0; i < lineLength; i++)
+        {
+        }
+    }
+
+
+
+
 
     /*
     SUBMODULE: openingMenu

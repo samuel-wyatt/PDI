@@ -1,0 +1,56 @@
+BEGIN MainClass
+
+
+
+
+
+
+
+SUBMODULE: OpeningMenu
+IMPORT: None
+EXPORT: None
+ASSERTION: Prints the opening menu for the program
+BEGIN OpeningMenu
+    PRINT "Welcome to the COVID-19 Data Analysis Program. Make a selection"
+    PRINT "from the menu below regarding the information you would like to" 
+    PRINT "see."
+    PRINT " "
+    PRINT "Please select from the menu below:"
+    PRINT "> 1. Statistics of entire nation."
+    PRINT "> 2. Statistics of region."
+    PRINT "> 3. Exit the program."
+    userIn (integer) <- GET USER INPUT
+    minVal (integer) <- 1
+    maxVal (integer) <- 3
+    inputValid(userIn, minVal, maxVal)
+END 
+
+SUBMODULE: MenuOne
+IMPORT: None
+EXPORT: None
+ASSERTION: Prints menu option one.
+BEGIN MenuOne        
+    PRINT "Statistics for the entire nation: Select from the menu below:"
+    PRINT "> 1. Display the total number of COVID-19 cases."
+    PRINT "> 2. Display the number of COVID-19 cases: Males."
+    PRINT "> 3. Display the number of COVID-19 cases: Females."
+    PRINT "> 4. Display the number of COVID-19 cases: 0-9 age group."
+    PRINT "> 5. Display the number of COVID-19 cases: 10-19 age group."
+    PRINT "> 6. Display the number of COVID-19 cases: 20-29 age group."
+    PRINT "> 7. Display the number of COVID-19 cases: 30-39 age group."
+    PRINT "> 8. Display the number of COVID-19 cases: 40-49 age group."
+    PRINT "> 9. Display the number of COVID-19 cases: 50-59 age group."
+    PRINT "> 10. Display the number of COVID-19 cases: 60-69 age group."
+    PRINT "> 11. Display the number of COVID-19 cases: 70-79 age group."
+    PRINT "> 12. Display the number of COVID-19 cases: 80-89 age group."
+    PRINT "> 13. Display the number of COVID-19 cases: 90+ age group."
+    userIn (integer) <- GET USER INPUT
+    minVal (integer) <- 1
+    maxVal (integer) <- 13
+    inputValid(userIn, minVal, maxVal)
+    PRINT "Total number of cases for " + ageGroup(userIn) + ": < " +
+                                                       covCase(ageGroup) + " >"
+    PRINT "Would you like to make another selection (Y or N) ? < " + yesNoInput
+                                                                         + " >"
+END
+
