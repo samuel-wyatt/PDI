@@ -1,3 +1,4 @@
+import java.util.*;
 public class Date
 {
     private int dayOfMonth;
@@ -12,15 +13,11 @@ public class Date
     */
     public Date(int pDayOfMonth, int pMonthOfYear, int pYear)
     {
-        
         dayOfMonth = pDayOfMonth;
         monthOfYear = pMonthOfYear;
         year = pYear;
-        if ((isValid(dayOfMonth, monthOfYear, year)) == false)
-        {
-            System.out.println("Invalid Date!");
-        } 
     }
+    
     
     /* 
     SUBMODULE: Date
