@@ -1,0 +1,137 @@
+/*********************************                                              
+ *Author: Samuel Wyatt (20555535)*                                              
+ *Date: 10/10/2021               *                                              
+ *Purpose: PDI Assignment        *                                              
+ *File Name: CovidCase.txt       *                                              
+ *********************************/  
+
+BEGIN CLASS CovidCase
+
+    PRIVATE country (String)
+    PRIVATE province (String)
+    PRIVATE region (String)
+    PRIVATE ageGroup (String)
+    PRIVATE cases (integer)
+    PRIVATE sex (char)
+    PRIVATE date (Date)
+
+    
+    SUBMODULE: CovidCase (Constructor with parameters)
+    IMPORT: pDate (Date), pCountry (String), pProvince (String), pRegion (String)
+                               pAgeGroup (String), pSex (char), pCases (integer)
+    EXPORT: None
+    ASSERTION: To create a CovidCase object using given variables.
+    BEGIN CovidCase
+        date (Date) <- pDate
+        country (String) <- pCountry
+        province (String) <- pProvince
+        region (String) <- pRegion
+        ageGroup (String) <- pAgeGroup
+        sex (char) <- pSex
+        cases (integer) <- pCases
+    END 
+
+
+    SUBMODULE: CovidCase (Copy Constructor)
+    IMPORT: pCovidCase (CovidCase)
+    EXPORT: None
+    ASSERTION: To create a copy of a CovidCase object.
+    BEGIN CovidCase
+        date (Date) <- pCovidCase.getDate();
+        country (String) <- pCovidCase.getCountry();
+        province (String) <- pCovidCase.getProvince();                           
+        region (String) <- pCovidCase.getRegion();                              
+        ageGroup (String) <- pCovidCase.getAgeGroup();                          
+        sex (char) <- pCovidCase.getSex();                                          
+        cases (integer) <- pCovidCase.getCases();
+    END 
+
+    
+    SUBMODULE: CovidCase (Default Constructor)
+    IMPORT: None
+    EXPORT: None
+    ASSERTION: To create a CovidCase object with default values.
+    BEGIN CovidCase
+        date (Date) <- NEW Date() 
+        country (String) <- "Belgium"
+        province (String) <- "NA"
+        region (String) <- "NA"
+        ageGroup (String) <- "NA"
+        sex (char) <- 'N'
+        cases (integer) <- 0
+    END 
+
+
+    SUBMODULE: getDate
+    IMPORT: None
+    EXPORT: date (Date)
+    ASSERTION: To return the object date.
+    BEGIN getDate
+        RETURN date (Date)
+    END 
+
+
+    SUBMODULE: getCountry
+    IMPORT: None
+    EXPORT: country (String)
+    ASSERTION: To return the value of country.
+    BEGIN getCountry
+        RETURN country (String)
+    END
+
+
+    SUBMODULE: getProvince
+    IMPORT: None
+    EXPORT: province (String)
+    ASSERTION: To return the value of province.
+    BEGIN getProvince
+        RETURN province (String)
+    END
+
+
+    SUBMODULE: getRegion
+    IMPORT: None
+    EXPORT: region (String)
+    ASSERTION: To return the value of region.
+    BEGIN getRegion
+        RETURN region (String)
+    END
+    
+
+    SUBMODULE: getAgeGroup
+    IMPORT: None
+    EXPORT: ageGroup (String)
+    ASSERTION: To return the value of ageGroup.
+    BEGIN getAgeGroup
+        RETURN ageGroup (String)
+    END
+
+
+    SUBMODULE: getSex
+    IMPORT: None
+    EXPORT: sex (char)
+    ASSERTION: To return the value of sex.
+    BEGIN getSex
+        RETURN sex (char)
+    END 
+
+
+    SUBMODULE: getCases
+    IMPORT: None
+    EXPORT: cases (integer)
+    ASSERTION: To return the value of cases.
+    BEGIN getCases
+        RETURN cases (integer)
+    END
+
+
+    SUBMODULE: toString
+    IMPORT: None
+    EXPORT: covCase (String)
+    ASSERTION: To create a string expressing the CovidCase object.
+    BEGIN toString
+        covCase (String) <- date + " " + country + " " + province + " " + region
+                                      + " " + ageGroup + " " + sex + " " + cases
+        RETURN covCase (String)
+    END
+END CLASS CovidCase

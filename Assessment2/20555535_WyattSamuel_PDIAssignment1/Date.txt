@@ -1,0 +1,182 @@
+/*********************************                                              
+ *Author: Samuel Wyatt (20555535)*                                              
+ *Date: 10/10/2021               *                                              
+ *Purpose: PDI Assignment        *                                              
+ *File Name: Date.txt            *                                              
+ *********************************/  
+
+BEGIN CLASS Date
+
+    PRIVATE dayOfMonth (integer)
+    PRIVATE monthOfYear (integer)
+    PRIVATE year (integer)
+    
+
+    SUBMODULE: Date (Constructor with parameters)
+    IMPORT: pDayOfMonth (integer), pMonthOfYear (integer), pYear (integer)
+    EXPORT: None
+    ASSERTION: To create a Date object with given class fields.
+    BEGIN Date
+        IF isValid(pDayOfMonth, pMonthOfYear, pYear) IS true THEN 
+            dayOfMonth (integer) <- pDayOfMonth
+            monthOfYear (integer) <- pMonthOfYear
+            year <- (integer) pYear
+        ELSE 
+            dayOfMonth (integer) <- 0
+            monthOfYear (integer) <-0 
+            year (integer) <- 0
+        END IF 
+    END
+
+
+    SUBMODULE: Date (Copy Constructor)
+    IMPORT: pDate (Date)
+    EXPORT: None
+    ASSERTION: To create a copy of a Date object.
+    BEGIN Date
+        dayOfMonth (integer) <- pDate.getDayOfMonth()
+        monthOfYear (integer) <- pDate.getMonthOfYear()
+        year <- (integer) pDate.getYear()
+    END 
+
+
+    SUBMODULE: Date (Default Constructor)
+    IMPORT: None
+    EXPORT: None
+    ASSERTION: To create a Date object with default values.
+    BEGIN Date
+        dayOfMonth (integer) <- 1
+        monthOfYear (integer) <- 1
+        year (integer) <- 2021
+    END
+
+
+    SUBMODULE: getDayOfMonth
+    IMPORT: None
+    EXPORT: dayOfMonth (integer)
+    ASSERTION: To return the value of dayOfMonth.
+    BEGIN getDayOfMonth
+        RETURN dayOfMonth (integer)
+    END
+    
+
+    SUBMODULE: getMonthOfYear
+    IMPORT: None
+    EXPORT: monthOfYear (integer)
+    ASSERTION: To return the value of monthOfYear.
+    BEGIN getMonthOfYear
+        RETURN monthOfYear (integer)
+    END
+    
+
+    SUBMODULE: getYear
+    IMPORT: None
+    EXPORT: year (integer)
+    ASSERTION: To return the value of year.
+    BEGIN getDayOfMonth
+        RETURN dayOfMonth (integer)
+    END
+
+
+    SUBMODULE: toString
+    IMPORT: None
+    EXPORT: date (String)
+    ASSERTION: To create a string containing the date in dd/mm/yyyy format.
+    BEGIN toString
+        IF dayOfMonth IS LESS THAN 10 AND monthOfYear IS LESS THAN 10 THEN 
+            date (String) <- "0" + dayOfMonth + "/0" + monthOfYear + "/" + year
+        
+        ELSE IF dayOfMonth IS LESS THAN 10 AND monthOfYear IS GREATER THAN 9 THEN
+            date (String) <- "0" + dayOfMonth + "/" + monthOfYear + "/" + year
+        
+        ELSE IF dayOfMonth IS GREATER THAN 9 AND monthOfYear IS LESS THAN 10 THEN
+            date (String) <- dayOfMonth + "/0" + monthOfYear + "/" + year
+
+        ELSE 
+            date (String) <- dayOfMonth + "/" + monthOfYear + "/" + year
+        END IF 
+
+        RETURN date (String)
+    END
+
+
+    SUBMODULE: isValid
+    IMPORT: dayOfMonth (integer), monthOfYear (integer), year (integer)
+    EXPORT: None
+    ASSERTION: To check if Date is valid.
+    BEGIN isValid
+        IF year IS LESS THAN 1000 AND year IS GREATER THAN 2999 THEN
+            RETURN false
+        END IF 
+
+        IF monthOfYear IS LESS THAN 1 AND monthOfYear IS GREATER THAN 12 THEN
+            RETURN false
+        END IF 
+
+        IF dayOfMonth IS LESS THAN 1 AND dayOfMonth IS GREATER THAN 31 THEN
+            RETURN false
+        END IF 
+
+        CASE (monthOfYear)
+            
+            1: 3: 5: 7: 8: 10: 12: 
+                RETURN true
+
+            4: 6: 9: 11:
+                IF dayOfMonth IS LESS THAN 31 THEN
+                    RETURN true
+                ELSE 
+                    RETURN false
+                END IF 
+
+            2:
+                leap (boolean) <- isLeap(year)
+                IF leap IS true THEN
+                    
+                    IF dayOfMonth IS LESS THAN OR EQUAL TO 29 THEN
+                        RETURN true 
+                    ELSE 
+                        RETURN false
+                    END IF 
+                
+                ELSE 
+                    IF dayOfMonth IS LESS THAN OR EQUAL TO 28 THEN
+                        RETURN true
+                    ELSE 
+                        RETURN false
+                    END IF
+                
+                END IF
+        END CASE
+        
+        RETURN true (boolean)
+    END 
+
+
+    SUBMODULE: isLeap
+    IMPORT: year (integer)
+    EXPORT: leap (boolean)
+    ASSERTION: To determine whether a certain year is a leap year or not.
+    BEGIN isLeap
+        leap (boolean) <- false
+        IF year IS DIVISIBLE BY 4 WITH NO REMAINDER THEN
+            
+            IF year IS DIVISIBLE BY 100 WITH NO REMAINDER THEN
+                
+                IF year IS DIVISIBLE BY 400 WITH NO REMAINDER THEN
+                    leap (boolean) <- true
+                ELSE
+                    leap (boolean) <-false
+                END IF
+            
+            ELSE 
+                leap (boolean) <- true
+            END IF 
+        
+        ELSE 
+            leap (boolean) <- false
+        END IF
+
+        RETURN leap (boolean)
+    END
+END CLASS Date

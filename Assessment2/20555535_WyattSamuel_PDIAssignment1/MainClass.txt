@@ -1,0 +1,600 @@
+/*********************************                                              
+ *Author: Samuel Wyatt (20555535)*                                              
+ *Date: 10/10/2021               *                                              
+ *Purpose: PDI Assignment        *                                              
+ *File Name: MainClass.txt       *                                              
+*********************************/  
+
+BEGIN MainClass
+    BEGIN main
+        DISPLAY "Log File Output" TO LOG FILE
+        DISPLAY "*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-" TO LOG FILE
+
+        fileName (String) <- "COVID19BE_CASES.csv"
+        lineNum (integer) <- 0 
+        lineNum (integer) <- lineCount(fileName)
+
+        DECLARE caseArray: ARRAY [lineNum] OF CovidCase
+        caseArray (CovidCase[]) <- readCSV(fileName, lineNum)
+
+        menuChoice(caseArray, lineNum)
+        DISPLAY "*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-*+-" TO LOG FILE
+    END
+
+
+    SUBMODULE: readCSV
+    IMPORT: pFileName (String), lineNum (integer)
+    EXPORT: None
+    ASSERTION: To read the data file, and return an array containing CovidCase objects.
+    BEGIN readCSV
+        theFile <- OPENFILE pFileName
+        DECLARE caseArray: ARRAY [lineNum] of CovidCase
+
+        TRY 
+            READ line (String) FROM theFile
+            READ line (String) FROM theFile
+            FOR i (integer) <- 0 TO i IS LESS THAN lineNum CHANGEBY 1
+                caseArray[i] <- parseLine(line, lineNum)
+                READ line (String) FROM theFile
+            END FOR 
+            CLOSEFILE theFile
+        
+        CATCH 
+            GENERATE ERROR 
+                
+                IF theFile IS EOF                        //EOF <- END OF FILE 
+                    TRY 
+                        CLOSEFILE theFile
+                    CATCH
+                END IF
+            DISPLAY "Error in processing file: " + ERROR MESSAGE
+            DISPLAY "Exiting Program"
+            EXIT PROGRAM
+        END TRY
+
+        RETURN caseArray (CovidCase[])
+    END
+
+    
+    SUBMODULE: lineCount
+    IMPORT: pFileName (String)
+    EXPORT: lineNum (integer)
+    ASSERTION: To count the amount of lines within the csv file.
+    BEGIN lineCount
+        theFile <- OPENFILE pFileName
+        lineNum (integer) <- 0
+
+        TRY 
+            READ line (String) FROM theFile
+            READ line (String) FROM theFile
+
+            WHILE theFile IS NOT EOF                    //EOF <- END OF FILE
+                lineNum <- lineNum + 1
+                READ line (String) FROM theFile
+            END WHILE
+            CLOSEFILE theFile
+        
+        CATCH
+            GENERATE ERROR 
+                
+                IF theFile IS EOF                        //EOF <- END OF FILE 
+                    TRY 
+                        CLOSEFILE theFile
+                    CATCH
+                END IF
+            DISPLAY "Error in processing file: " + ERROR MESSAGE
+            DISPLAY "Exiting Program"
+            EXIT PROGRAM
+        END TRY
+
+        RETURN lineNum (integer)
+    END 
+
+
+    SUBMODULE: parseLine
+    IMPORT: csvLine (String), lineNum (integer)
+    EXPORT: newCase (CovidCase)
+    ASSERTION: To parse the csv row into a CovidCase object.
+    BEGIN parseLine
+        
+        DECLARE splitLine: ARRAY [8] OF Strings
+        splitLine[0 -> 8] <- SPLIT csvLine AT EVERY COMMA 
+
+        dayOfMonth (integer) <- CONVERT splitLine[0] INTO integer
+        monthOfYear (integer) <- CONVERT splitLine[1] INTO integer
+        year (integer) <- CONVERT splitLine[2] INTO integer
+        cases (integer) <- CONVERT splitLine[8] INTO integer
+
+        country (String) <- splitLine[3]
+        province (String) <- splitLine[4]
+        region (String) <- splitLine[5]
+        ageGroup (String) <- splitLine[6]
+
+        var7 (String) <- splitLine[7]
+        sex (char) <- FIRST CHARACTER IN var7
+
+        date (Date) <- dayOfMonth, monthOfYear, year
+
+        newCase (CovidCase) <- date, country, province, region, ageGroup, sex, cases
+        RETURN newCase (CovidCase)
+    END
+
+
+    SUBMODULE: menuChoice
+    IMPORT: caseArray (CovidCase[]), lineNum (integer)
+    EXPORT: None
+    ASSERTION: To control the menu user input and output.
+    BEGIN menuChoice
+        exit (boolean) <- false
+        DO 
+            openingMenu()
+                TRY
+                    userInput (integer) <- GET USER INPUT
+                    DISPLAY userInput TO LOG FILE
+                    
+                    CASE userInput
+                        1:
+                            menuOne(caseArray, lineNum)
+                        
+                        2:
+                            menuTwo(caseArray, lineNum)
+
+                        3:
+                            exit (boolean) <- true
+                            DISPLAY "Goodbye!"
+
+                        DEFAULT:
+                            DISPLAY "Invalid Choice: Please enter a valid number
+                                     between 1 and 3."
+                    END CASE
+                CATCH ERROR
+                    DISPLAY "Error: Invalid Input " + ERROR MESSAGE
+                END TRY
+        WHILE exit IS NOT EQUAL TO true
+    END
+
+
+    SUBMODULE: OpeningMenu
+    IMPORT: None
+    EXPORT: None
+    ASSERTION: To print and run the opening menu. 
+    BEGIN OpeningMenu
+        DISPLAY "Welcome to the COVID-19 Data Analysis Program. Make a selection"
+        DISPLAY "from the menu below regarding the information you would like to" 
+        DISPLAY "see."
+        DISPLAY " "
+        DISPLAY "Please select from the menu below:"
+        DISPLAY "> 1. Statistics of entire nation."
+        DISPLAY "> 2. Statistics of region."
+        DISPLAY "> 3. Exit the program."
+        DISPLAY "Your choice: " 
+    END 
+
+
+    SUBMODULE: MenuOne
+    IMPORT: caseArray (CovidCase[]), lineNum (integer)
+    EXPORT: None
+    ASSERTION: To print, and control, menu choice 1.
+    BEGIN MenuOne        
+        exit (boolean) <- false
+        DO
+            DO
+
+            TRY
+
+            DISPLAY ""
+            DISPLAY "Statistics for the entire nation: Select from the menu below:"
+            DISPLAY "> 1. Display the total number of COVID-19 cases."
+            DISPLAY "> 2. Display the number of COVID-19 cases: Males."
+            DISPLAY "> 3. Display the number of COVID-19 cases: Females."
+            DISPLAY "> 4. Display the number of COVID-19 cases: 0-9 age group."
+            DISPLAY "> 5. Display the number of COVID-19 cases: 10-19 age group."
+            DISPLAY "> 6. Display the number of COVID-19 cases: 20-29 age group."
+            DISPLAY "> 7. Display the number of COVID-19 cases: 30-39 age group."
+            DISPLAY "> 8. Display the number of COVID-19 cases: 40-49 age group."
+            DISPLAY "> 9. Display the number of COVID-19 cases: 50-59 age group."
+            DISPLAY "> 10. Display the number of COVID-19 cases: 60-69 age group."
+            DISPLAY "> 11. Display the number of COVID-19 cases: 70-79 age group."
+            DISPLAY "> 12. Display the number of COVID-19 cases: 80-89 age group."
+            DISPLAY "> 13. Display the number of COVID-19 cases: 90+ age group."
+            DISPLAY "Your choice: " 
+            userIn (integer) <- GET USER INPUT
+            DISPLAY ""
+            
+            IF userInput IS LESS THAN 1 AND userInput IS GREATER THAN 13 THEN
+                DISPLAY "Invalid Choice: Please enter a valid number between 1 and 13."
+                exit (boolean) <- false
+            ELSE 
+                exit (boolean) <- true
+            END IF
+
+            CATCH ERROR
+                DISPLAY "Error: Invalid Input " + ERROR MESSAGE
+            END TRY
+            
+            WHILE exit IS NOT EQUAL TO true
+
+        nationCases(userInput, caseArray, lineNum)
+        exit (boolean) <- yesNoChoice()
+        WHILE exit IS NOT EQUAL TO true
+    END
+
+
+    SUBMODULE: menuTwo
+    IMPORT: caseArray (CovidCase[]), lineNum (integer)
+    EXPORT: None
+    ASSERTION: To print, and control, menu choice 2.
+    BEGIN menuTwo
+        userInput (integer) <- 0
+        exit (boolean) <- false
+        DO 
+            DO
+            
+            TRY
+                DISPLAY ""
+                DISPLAY "Statistics by Region: select from the menu below:"
+                DISPLAY "Which region would you like statistics for?"
+                DISPLAY "> 1. Flanders"
+                DISPLAY "> 2. Brussels"
+                DISPLAY "> 3. Wallonia"
+                DISPLAY "> 4. Unknown:
+                DISPLAY "Your choice: "
+                userInput (integer) <- GET USER INPUT
+                DISPLAY userInput TO LOG FILE
+                
+                IF userInput IS LESS THAN 1 AND userInput IS GREATER THAN 4 THEN
+                    DISPLAY "Invalid Choice: Please enter a valid number between 1 and 4."
+                    exit (boolean) <- false
+                ELSE
+                    exit (boolean) <- true
+                END IF
+            
+            CATCH ERROR
+                DISPLAY "Error: Invalid Input " + GET ERROR MESSAGE
+            END TRY
+
+            WHILE exit IS NOT EQUAL TO true
+            regionCases(userInput, caseArray, lineNum)
+            exit (boolean) <- yesNoChoice()
+        WHILE exit IS NOT EQUAL TO true
+    END
+
+
+    SUBMODULE: nationCases
+    IMPORT: userInput (integer), caseArray (CovidCase[]), lineNum (integer)
+    EXPORT: None
+    ASSERTION: Calculate the nationwide statistics.
+    BEGIN nationCases
+        CASE userInput
+            1:
+                totalCases(caseArray, lineNum, 0)
+
+            2:
+                sexCases(caseArray, lineNum, 0, 'M', " male ")
+
+            3:
+                sexCases(caseArray, lineNum, 0, 'F', " female ") 
+
+            4: 
+                ageCases(caseArray, lineNum, 0, "0-9")
+
+            5:
+                ageCases(caseArray, lineNum, 0, "10-19")
+
+            6:
+                ageCases(caseArray, lineNum, 0, "20-29")
+
+            7:
+                ageCases(caseArray, lineNum, 0, "30-39")
+
+            8:
+                ageCases(caseArray, lineNum, 0, "40-49")
+
+            9:
+                ageCases(caseArray, lineNum, 0, "50-59")
+
+            10:
+                ageCases(caseArray, lineNum, 0, "60-69")
+
+            11:
+                ageCases(caseArray, lineNum, 0, "70-79")
+
+            12:
+                ageCases(caseArray, lineNum, 0, "80-89")
+            
+            13:
+                ageCases(caseArray, lineNum, 0, "90+")
+
+        END CASE
+    END
+
+
+    SUBMODULE: regionCases
+    IMPORT: userInput (integer), caseArray (CovidCase[]), lineNum (integer)
+    EXPORT: None
+    ASSERTION: Calculate the regionwide statistics.
+    BEGIN regionCases
+        DISPLAY ""
+        totalCases(caseArray, lineNum, userInput)
+        sexCases(caseArray, lineNum, userInput, 'M', " male ")
+        sexCases(caseArray, lineNum, userInput, 'F', " female ")
+        ageCases(caseArray, lineNum, userInput, "0-9")
+        ageCases(caseArray, lineNum, userInput, "10-19")
+        ageCases(caseArray, lineNum, userInput, "20-29")
+        ageCases(caseArray, lineNum, userInput, "30-39")
+        ageCases(caseArray, lineNum, userInput, "40-49")
+        ageCases(caseArray, lineNum, userInput, "50-59")
+        ageCases(caseArray, lineNum, userInput, "60-69")
+        ageCases(caseArray, lineNum, userInput, "70-79")
+        ageCases(caseArray, lineNum, userInput, "80-89")
+        ageCases(caseArray, lineNum, userInput, "90+")
+    END
+
+
+    SUBMODULE: yesNoChoice
+    IMPORT: None
+    EXPORT: (boolean)
+    ASSERTION: To decide whether the menu will loop, based on user input.
+    BEGIN yesNoChoice
+        exit (boolean) <- true
+        DO
+            DISPLAY ""
+            DISPLAY "Would you like to make another selection? (Y or N)?"
+            userInput (char) <- GET USER INPUT
+            DISPLAY userInput TO LOG FILE
+
+            IF userInput IS EQUAL TO 'y' OR userInput IS EQUAL TO 'Y' THEN
+                RETURN false
+            ELSE IF userInput IS EQUAL TO 'n' OR userInput IS EQUAL TO 'N' THEN
+                RETURN true
+            ELSE 
+                DISPLAY "Invalid Choice, Please enter a valid character."
+                exit (boolean) <- false
+            END IF 
+        WHILE exit IS NOT EQUAL TO true
+        RETURN true
+    END
+
+
+    SUBMODULE: totalCases
+    IMPORT: caseArray (CovidCase[]), lineNum (integer), calcType (integer)
+    EXPORT: None
+    ASSERTION: To determine the total number of cases.
+    BEGIN totalCases
+        IF calcType IS EQUAL TO 0 THEN
+            totalCases (integer) <- 0 
+            FOR i (integer) <- 0 TO lineNum CHANGEBY BY 1
+                newCase (CovidCase) <- caseArray[i]
+                totalCases (integer) <- totalCases + newCase.getCases()
+            END FOR 
+            DISPLAY "Total number of cases: " + totalCases
+        
+        ELSE IF calcType IS EQUAL TO 1 THEN
+            flanCases (integer) <- 0
+            FOR i (integer) <- 0 TO lineNum CHANGEBY 1
+                newCase (CovidCase) <- caseArray[i]
+                
+                IF newCase.getRegion() IS EQUAL TO "Flanders" THEN
+                    flanCases (integer) <- flanCases + newCase.getCases()
+                END IF 
+            END FOR 
+            DISPLAY "Total number of COVID-19 cases for Flanders is: " + flanCases
+
+        ELSE IF calcType IS EQUAL TO 2 THEN
+            brusCases (integer) <- 0
+            FOR i (integer) <- 0 TO lineNum CHANGEBY 1
+                newCase (CovidCase) <- caseArray[i]
+                
+                IF newCase.getRegion() IS EQUAL TO "Brussels" THEN
+                    brusCases (integer) <- brusCases + newCase.getCases()
+                END IF 
+            END FOR 
+            DISPLAY "Total number of COVID-19 cases for Brussels is: " + brusCases
+        
+        ELSE IF calcType IS EQUAL TO 3 THEN 
+            wallCases (integer) <- 0
+            FOR i (integer) <- 0 TO lineNum CHANGEBY 1
+                newCase (CovidCase) <- caseArray[i]
+                
+                IF newCase.getRegion() IS EQUAL TO "Wallonia" THEN
+                    wallCases (integer) <- wallCases + newCase.getCases()
+                END IF 
+            END FOR 
+            DISPLAY "Total number of COVID-19 cases for Wallonia is: " + wallCases
+        
+        ELSE IF calcType IS EQUAL TO 4 THEN
+            unknCases (integer) <- 0
+            FOR i (integer) <- 0 TO lineNum CHANGEBY 1
+                newCase (CovidCase) <- caseArray[i]
+                
+                IF newCase.getRegion() IS NOT EQUAL TO "Flanders" AND
+                   newCase.getRegion() IS NOT EQUAL TO "Brussels" AND
+                   newCase.getRegion() IS NOT EQUAL TO "Wallonia" THEN
+
+                        unknCases (integer) <- unknCases + newCase.getCases()
+                END IF 
+            END FOR 
+            DISPLAY "Total number of COVID-19 cases for all unknown regions is: " 
+                                                                    + unknCases
+        END IF
+    END
+
+
+    SUBMODULE: sexCases 
+    IMPORT: caseArray (CovidCase[]), lineNum (integer), calcType (integer),
+            sex (char), gender (String)
+    EXPORT: None
+    ASSERTION: To determine the number of cases for males or females.
+    BEGIN sexCases
+        IF calcType IS EQUAL TO 0 THEN
+            totalCases (integer) <- 0 
+            FOR i (integer) <- 0 TO lineNum CHANGEBY BY 1
+                newCase (CovidCase) <- caseArray[i]
+                IF newCase.getSex() IS EQUAL TO sex (char) THEN
+                    totalCases (integer) <- totalCases + newCase.getCases()
+                END IF 
+            END FOR 
+            DISPLAY "Total number of" + gender + "cases: " + totalCases
+        
+        ELSE IF calcType IS EQUAL TO 1 THEN
+            flanCases (integer) <- 0
+            FOR i (integer) <- 0 TO lineNum CHANGEBY 1
+                newCase (CovidCase) <- caseArray[i]
+                
+                IF newCase.getRegion() IS EQUAL TO "Flanders" THEN
+                    IF newCase.getSex() IS EQUAL TO sex (char) THEN
+                        flanCases (integer) <- flanCases + newCase.getCases()
+                    END IF 
+                END IF 
+            END FOR 
+            DISPLAY "Total number of COVID-19"+gender+"cases for Flanders is: " 
+                                                                    + flanCases
+
+        ELSE IF calcType IS EQUAL TO 2 THEN
+            brusCases (integer) <- 0
+            FOR i (integer) <- 0 TO lineNum CHANGEBY 1
+                newCase (CovidCase) <- caseArray[i]
+                
+                IF newCase.getRegion() IS EQUAL TO "Brussels" THEN
+                    IF newCase.getSex() IS EQUAL TO sex (char) THEN
+                        brusCases (integer) <- brusCases + newCase.getCases()
+                    END IF 
+                END IF 
+            END FOR 
+            DISPLAY "Total number of COVID-19"+gender+"cases for Brussels is: " 
+                                                                    + brusCases
+        
+        ELSE IF calcType IS EQUAL TO 3 THEN 
+            wallCases (integer) <- 0
+            FOR i (integer) <- 0 TO lineNum CHANGEBY 1
+                newCase (CovidCase) <- caseArray[i]
+                
+                IF newCase.getRegion() IS EQUAL TO "Wallonia" THEN
+                    IF newCase.getSex() IS EQUAL TO sex (char) THEN
+                        wallCases (integer) <- wallCases + newCase.getCases()
+                    END IF 
+                END IF 
+            END FOR 
+            DISPLAY "Total number of COVID-19"+gender+"cases for Wallonia is: " 
+                                                                    + wallCases
+        
+        ELSE IF calcType IS EQUAL TO 4 THEN
+            unknCases (integer) <- 0
+            FOR i (integer) <- 0 TO lineNum CHANGEBY 1
+                newCase (CovidCase) <- caseArray[i]
+                
+                IF newCase.getRegion() IS NOT EQUAL TO "Flanders" AND
+                   newCase.getRegion() IS NOT EQUAL TO "Brussels" AND
+                   newCase.getRegion() IS NOT EQUAL TO "Wallonia" THEN
+                    IF newCase.getSex() IS EQUAL TO sex (char) THEN
+                        unknCases (integer) <- unknCases + newCase.getCases()
+                    END IF 
+                END IF 
+            END FOR 
+            DISPLAY "Total number of COVID-19"+gender+"cases for all unknown " +
+                                                      "regions is: " + unknCases
+        END IF
+    END
+
+
+    SUBMODULE: ageCases
+    IMPORT: caseArray (CovidCase[]), lineNum (integer), calcType (integer), age (String)
+    EXPORT: None
+    ASSERTION: To determine the number of cases for a certain age range.
+    BEGIN age
+        IF calcType IS EQUAL TO 0 THEN
+            totalCases (integer) <- 0 
+            FOR i (integer) <- 0 TO lineNum CHANGEBY BY 1
+                newCase (CovidCase) <- caseArray[i]
+                IF newCase.getAgeGroup() IS EQUAL TO age (String) THEN
+                    totalCases (integer) <- totalCases + newCase.getCases()
+                END IF 
+            END FOR 
+            DISPLAY "Total number of cases for " + age+ " : " + totalCases
+        
+        ELSE IF calcType IS EQUAL TO 1 THEN
+            flanCases (integer) <- 0
+            FOR i (integer) <- 0 TO lineNum CHANGEBY 1
+                newCase (CovidCase) <- caseArray[i]
+                
+                IF newCase.getRegion() IS EQUAL TO "Flanders" THEN
+                    IF newCase.getAgeGroup() IS EQUAL TO age (String) THEN
+                        flanCases (integer) <- flanCases + newCase.getCases()
+                    END IF 
+                END IF 
+            END FOR 
+            DISPLAY "Total number of COVID-19 cases in " + age + " age group " +
+                                                  for Flanders is: " + flanCases
+
+        ELSE IF calcType IS EQUAL TO 2 THEN
+            brusCases (integer) <- 0
+            FOR i (integer) <- 0 TO lineNum CHANGEBY 1
+                newCase (CovidCase) <- caseArray[i]
+                
+                IF newCase.getRegion() IS EQUAL TO "Brussels" THEN
+                    IF newCase.getAgeGroup() IS EQUAL TO age (String) THEN
+                        brusCases (integer) <- brusCases + newCase.getCases()
+                    END IF 
+                END IF 
+            END FOR 
+            DISPLAY "Total number of COVID-19 cases in " + age + " age group " + 
+                                                  for Brussels is: " + brusCases
+        
+        ELSE IF calcType IS EQUAL TO 3 THEN 
+            wallCases (integer) <- 0
+            FOR i (integer) <- 0 TO lineNum CHANGEBY 1
+                newCase (CovidCase) <- caseArray[i]
+                
+                IF newCase.getRegion() IS EQUAL TO "Wallonia" THEN
+                    IF newCase.getAgeGroup() IS EQUAL TO age (String) THEN
+                        wallCases (integer) <- wallCases + newCase.getCases()
+                    END IF 
+                END IF 
+            END FOR 
+            DISPLAY "Total number of COVID-19 cases in " + age + " age group " + 
+                                                  for Wallonia is: " + wallCases
+        
+        ELSE IF calcType IS EQUAL TO 4 THEN
+            unknCases (integer) <- 0
+            FOR i (integer) <- 0 TO lineNum CHANGEBY 1
+                newCase (CovidCase) <- caseArray[i]
+                
+                IF newCase.getRegion() IS NOT EQUAL TO "Flanders" AND
+                   newCase.getRegion() IS NOT EQUAL TO "Brussels" AND
+                   newCase.getRegion() IS NOT EQUAL TO "Wallonia" THEN
+                    IF newCase.getAgeGroup() IS EQUAL TO age (String) THEN
+                        unknCases (integer) <- unknCases + newCase.getCases()
+                    END IF 
+                END IF 
+            END FOR 
+            DISPLAY Total number of COVID-19 cases in " + age + " age group " +
+                                       for all unknown regions is: " + unknCases
+        END IF
+    END
+
+
+    SUBMODULE: display
+    IMPORT: line (string), println (integer)
+    EXPORT: None
+    ASSERTION: To take a string of text, and print it to both the command line
+                as well as a logFile.
+    BEGIN display
+        TRY
+            IF println IS EQUAL TO 1 THEN
+                PRINT line (String) WITH NEW LINE 
+            ELSE IF println IS EQUAL TO 2 THEN
+                PRINT line (String) WITH NO NEW LINE
+            END IF 
+            
+            logFile <- CREATEFILE "logFile.txt"
+            logFile <- WRITE LINE TO FILE
+
+            IF println IS EQUAL TO 0 OR println IS EQUAL TO 1 THEN
+                logFile <- WRITE LINE TO FILE
+            END IF 
+            CLOSEFILE logFile
+        CATCH ERROR
+            PRINT "Error in File Processing: " + GET ERROR MESSAGE
+        END TRY
+    END
+END CLASS MainClass
